@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nettverkskommandoer — CyberLab</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/lab-shared.css">
+<style>
+.back-link:hover{color:var(--green)}
+.mod-hero .section-title span{color:var(--green)}
+.ts-nav{background:#1a1a2e}
+</style>
+</head>
+<body class="page">
+<nav class="nav">
+  <div class="nav-logo"><span class="bracket">[</span>CyberLab<span class="bracket">]</span></div>
+  <div class="nav-links">
+    <a href="../index.html" class="nav-link">Hjem</a>
+    <a href="nettverk.html" class="nav-link on">Nettverk</a>
+    <a href="kryptografi.html" class="nav-link">Kryptografi</a>
+    <a href="xss.html" class="nav-link">XSS</a>
+    <a href="ids-ips.html" class="nav-link">IDS/IPS</a>
+    <a href="epost-protokoller.html" class="nav-link">E-post</a>
+    <a href="kali.html" class="nav-link">Kali</a>
+  </div>
+</nav>
+
+<div class="container-sm page" style="padding-top:40px;padding-bottom:80px">
+  <a href="../index.html" class="back-link">← Tilbake</a>
+
+  <div class="mod-hero">
+    <div class="section-eyebrow">Modul 1</div>
+    <div class="section-title">Nettverks<span>kommandoer</span></div>
+    <p class="section-desc">Bruk terminalen til å kartlegge nettverk, analysere mistenkelig output, og tenk som en angriper.</p>
+    <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span class="badge badge-module">6 labber</span>
+      <span class="badge badge-easy">Nivå 1–2: Lett</span>
+      <span class="badge badge-medium">Nivå 3–4: Middels</span>
+      <span class="badge badge-hard">Nivå 5–6: Hard</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap" style="margin-bottom:28px">
+    <div class="progress-label"><span>Fremgang</span><span id="progressLabel">0 / 6 fullført</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+
+  <div class="filter-row">
+    <button class="filter-pill active-all" onclick="setFilter('all',this)">Alle</button>
+    <button class="filter-pill" onclick="setFilter('easy',this)">Lett</button>
+    <button class="filter-pill" onclick="setFilter('medium',this)">Middels</button>
+    <button class="filter-pill" onclick="setFilter('hard',this)">Hard</button>
+  </div>
+
+  <div class="tasks">
+
+<!-- LAB 1: ipconfig/ifconfig ─────────────────────────── -->
+<div class="lab-card" id="net-1" data-level="easy">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">01</span>
+    <span class="lab-title">Kartlegg maskinen din — ipconfig / ifconfig</span>
+    <div class="lab-meta"><span class="badge badge-easy">Lett</span><span class="level-badge lb-1" style="margin:0">Nivå 1</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-1">Nivå 1 — Lokal nettverksinformasjon</div>
+        <p class="lab-desc">Bruk terminalen til høyre til å hente nettverksinformasjon om maskinen. Dette er det første en angriper gjør etter å ha fått tilgang.</p>
+        <div>
+          <div class="obj-title">Mål</div>
+          <div class="obj-item"><div class="obj-num">1</div><div class="obj-text">Kjør <code>ipconfig</code> — finn IP-adresse, subnettmaske og gateway</div></div>
+          <div class="obj-item"><div class="obj-num">2</div><div class="obj-text">Er IP-adressen privat eller offentlig? Hvilken klasse?</div></div>
+          <div class="obj-item"><div class="obj-num">3</div><div class="obj-text">Hva er standard gateway, og hva brukes den til?</div></div>
+          <div class="obj-item"><div class="obj-num">4</div><div class="obj-text">Prøv også <code>ifconfig</code> og <code>ip a</code></div></div>
+        </div>
+        <div>
+          <button class="hint-btn" onclick="toggleHint(this)">▶ Hint</button>
+          <div class="hint-box">Private adresser starter med <code>10.</code>, <code>172.16-31.</code> eller <code>192.168.</code>. Alt annet er offentlig. Gateway er ruteren — all trafikk ut av nettverket passerer den.</div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box"><strong>IP:</strong> <code>192.168.1.105</code> — privat, klasse C. <strong>Maske:</strong> /24 = 254 mulige enheter. <strong>Gateway:</strong> <code>192.168.1.1</code> — ruteren. En angriper bruker disse for å forstå hvor i nettverket han befinner seg og hva som er nabomaskiner.</div>
+        </div>
+        <div class="complete-banner" id="done-net-1"><span>✓</span> Lab 1 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('net-1')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar">
+            <div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div>
+            <div class="fake-url">Terminal — student@cyberlab:~$</div>
+          </div>
+          <div class="lab-term" style="flex:1">
+            <div class="lab-term-body" id="tb1"><div class="lt-info">Skriv 'help' for tilgjengelige kommandoer</div></div>
+            <div class="lab-term-input"><span class="lt-ps1">student@cyberlab:~$&nbsp;</span><input class="lt-in" id="ti1" placeholder="skriv kommando..." autocomplete="off"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAB 2: DNS & ping ─────────────────────────────────── -->
+<div class="lab-card" id="net-2" data-level="easy">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">02</span>
+    <span class="lab-title">DNS-rekognosering — nslookup og ping</span>
+    <div class="lab-meta"><span class="badge badge-easy">Lett</span><span class="level-badge lb-2" style="margin:0">Nivå 2</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-2">Nivå 2 — DNS og tilgjengelighet</div>
+        <p class="lab-desc">DNS oversetter domenenavn til IP-adresser. Angripere bruker DNS-oppslag til å kartlegge infrastruktur uten å røre serverne direkte.</p>
+        <div>
+          <div class="obj-title">Mål</div>
+          <div class="obj-item"><div class="obj-num">1</div><div class="obj-text">Kjør <code>nslookup vg.no</code> — hvilke IP-er returneres?</div></div>
+          <div class="obj-item"><div class="obj-num">2</div><div class="obj-text">Kjør <code>nslookup -type=MX vg.no</code> — hva er MX-records?</div></div>
+          <div class="obj-item"><div class="obj-num">3</div><div class="obj-text">Kjør <code>ping vg.no</code> — svarer serveren? Hva betyr timeout?</div></div>
+          <div class="obj-item"><div class="obj-num">4</div><div class="obj-text">Forklar: hva kan en angriper lære av DNS-informasjon alene?</div></div>
+        </div>
+        <div>
+          <button class="hint-btn" onclick="toggleHint(this)">▶ Hint</button>
+          <div class="hint-box"><strong>MX-records</strong> avslører e-postservere. Mange server-typer blokkerer ping (ICMP) for å skjule seg — men de er fremdeles oppe.</div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box"><strong>DNS gir:</strong> IP-adresser, hosting-leverandør, CDN-info, e-postservere (MX), navneservere (NS). Alt uten å sende én pakke til serveren selv — dette kalles passiv rekognosering.</div>
+        </div>
+        <div class="complete-banner" id="done-net-2"><span>✓</span> Lab 2 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('net-2')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar">
+            <div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div>
+            <div class="fake-url">Terminal — student@cyberlab:~$</div>
+          </div>
+          <div class="lab-term" style="flex:1">
+            <div class="lab-term-body" id="tb2"><div class="lt-info">Prøv: nslookup vg.no</div></div>
+            <div class="lab-term-input"><span class="lt-ps1">student@cyberlab:~$&nbsp;</span><input class="lt-in" id="ti2" placeholder="skriv kommando..." autocomplete="off"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAB 3: netstat — åpne porter ──────────────────────── -->
+<div class="lab-card" id="net-3" data-level="medium">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">03</span>
+    <span class="lab-title">Analyser åpne porter — netstat output</span>
+    <div class="lab-meta"><span class="badge badge-medium">Middels</span><span class="level-badge lb-3" style="margin:0">Nivå 3</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-3">Nivå 3 — Portanalyse</div>
+        <p class="lab-desc">Netstat-outputen til høyre kommer fra en server. Analyser den og identifiser røde flagg — akkurat slik en SOC-analytiker ville gjort det.</p>
+        <div>
+          <div class="obj-title">Mål</div>
+          <div class="obj-item"><div class="obj-num">1</div><div class="obj-text">Kjør <code>netstat</code> — les outputen nøye</div></div>
+          <div class="obj-item"><div class="obj-num">2</div><div class="obj-text">Finn alle røde flagg — hvilke porter er mistenkelige?</div></div>
+          <div class="obj-item"><div class="obj-num">3</div><div class="obj-text">Hvilken tilkobling indikerer en aktiv bakdør?</div></div>
+          <div class="obj-item"><div class="obj-num">4</div><div class="obj-text">Hva gjør du som incident responder umiddelbart?</div></div>
+        </div>
+        <div>
+          <button class="hint-btn" onclick="toggleHint(this)">▶ Hint</button>
+          <div class="hint-box">Port <code>4444</code> = Metasploit Meterpreter bakdør. Port <code>23</code> = Telnet (klartekst). Port <code>3306</code> åpen på <code>0.0.0.0</code> = database eksponert mot alle.</div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box"><strong>Røde flagg:</strong><br>• Port 4444 ESTABLISHED til ekstern IP → aktiv bakdør/C2<br>• Port 23 LISTENING → Telnet skal ikke eksistere<br>• Port 3306 på 0.0.0.0 → database eksponert<br><br><strong>Umiddelbar handling:</strong> Isoler maskinen, ta minnedump, blokker C2-IP i brannmur.</div>
+        </div>
+        <div class="complete-banner" id="done-net-3"><span>✓</span> Lab 3 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('net-3')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar">
+            <div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div>
+            <div class="fake-url">Terminal — student@kompromittert-server:~$</div>
+          </div>
+          <div class="lab-term" style="flex:1">
+            <div class="lab-term-body" id="tb3"><div class="lt-info">Kjør 'netstat' for å se nettverkstilstanden</div></div>
+            <div class="lab-term-input"><span class="lt-ps1">student@server:~$&nbsp;</span><input class="lt-in" id="ti3" placeholder="skriv kommando..." autocomplete="off"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAB 4: traceroute ─────────────────────────────────── -->
+<div class="lab-card" id="net-4" data-level="medium">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">04</span>
+    <span class="lab-title">Kartlegg nettverksruten — traceroute</span>
+    <div class="lab-meta"><span class="badge badge-medium">Middels</span><span class="level-badge lb-3" style="margin:0">Nivå 4</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-3">Nivå 4 — Nettverkstopologi</div>
+        <p class="lab-desc">Traceroute viser hvert hopp en pakke tar fra din maskin til destinasjonen. Brukes av angripere til å kartlegge infrastruktur og finne svake punkter.</p>
+        <div>
+          <div class="obj-title">Mål</div>
+          <div class="obj-item"><div class="obj-num">1</div><div class="obj-text">Kjør <code>tracert vg.no</code> og tell antall hopp</div></div>
+          <div class="obj-item"><div class="obj-num">2</div><div class="obj-text">Hva betyr <code>* * *</code> på et hopp?</div></div>
+          <div class="obj-item"><div class="obj-num">3</div><div class="obj-text">Sammenlign <code>tracert vg.no</code> og <code>tracert google.com</code></div></div>
+          <div class="obj-item"><div class="obj-num">4</div><div class="obj-text">Hva kan traceroute avsløre om intern nettverksstruktur?</div></div>
+        </div>
+        <div>
+          <button class="hint-btn" onclick="toggleHint(this)">▶ Hint</button>
+          <div class="hint-box"><code>* * *</code> betyr at ruteren ikke svarer på ICMP TTL-exceeded — vanlig sikkerhetstiltak. Angripere kan fremdeles bruke TCP-traceroute for å omgå dette.</div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box">Traceroute avslører router-navn som ofte inneholder stedsnavn og leverandørinfo: <code>ae0.cr1-osl1.telia.net</code> avslører at Telia brukes i Oslo. En angriper bygger nettverkskart fra slik info for å finne singelpunkter og planlegge angrep.</div>
+        </div>
+        <div class="complete-banner" id="done-net-4"><span>✓</span> Lab 4 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('net-4')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar">
+            <div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div>
+            <div class="fake-url">Terminal — student@cyberlab:~$</div>
+          </div>
+          <div class="lab-term" style="flex:1">
+            <div class="lab-term-body" id="tb4"><div class="lt-info">Prøv: tracert vg.no</div></div>
+            <div class="lab-term-input"><span class="lt-ps1">student@cyberlab:~$&nbsp;</span><input class="lt-in" id="ti4" placeholder="skriv kommando..." autocomplete="off"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAB 5: SSH vs Telnet ──────────────────────────────── -->
+<div class="lab-card" id="net-5" data-level="hard">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">05</span>
+    <span class="lab-title">SSH vs Telnet — kryptert vs klartekst</span>
+    <div class="lab-meta"><span class="badge badge-hard">Hard</span><span class="level-badge lb-4" style="margin:0">Nivå 5</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-4">Nivå 5 — Protokollsikkerhet</div>
+        <p class="lab-desc">Du er en angriper som lytter på nettverkstrafikken. Til høyre ser du to innloggingsforsøk — én via Telnet og én via SSH. Analyser begge.</p>
+        <div>
+          <div class="obj-title">Mål</div>
+          <div class="obj-item"><div class="obj-num">1</div><div class="obj-text">Les Telnet-pakken — hva kan du se i klartekst?</div></div>
+          <div class="obj-item"><div class="obj-num">2</div><div class="obj-text">Les SSH-pakken — hva ser du, og hva ser du ikke?</div></div>
+          <div class="obj-item"><div class="obj-num">3</div><div class="obj-text">Kjør <code>ssh</code> i terminalen — forstå fingerprint-advarselen</div></div>
+          <div class="obj-item"><div class="obj-num">4</div><div class="obj-text">Forklar: hva er et MITM-angrep, og hvordan stopper SSH-nøkkel det?</div></div>
+        </div>
+        <div>
+          <button class="hint-btn" onclick="toggleHint(this)">▶ Hint</button>
+          <div class="hint-box">SSH-fingerprint er en hash av serverens offentlige nøkkel. Hvis fingerprinten endrer seg neste gang du kobler til, kan noen sitte mellom deg og serveren.</div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box"><strong>Telnet:</strong> Brukernavn og passord i klartekst — Wireshark viser alt direkte.<br><br><strong>SSH:</strong> Alt kryptert med AES — en avlytter ser bare kryptert støy.<br><br><strong>MITM:</strong> Angriperen setter seg mellom klient og server. SSH-nøkkelverifisering stopper dette fordi angriperen ikke har serverens private nøkkel.</div>
+        </div>
+        <div class="complete-banner" id="done-net-5"><span>✓</span> Lab 5 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('net-5')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar">
+            <div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div>
+            <div class="fake-url">Wireshark — nettverkspakke-analyse (simulert)</div>
+          </div>
+          <div class="site-wrap">
+            <div class="ts" style="background:#1a1a2e">
+              <div style="background:#2d2d44;border-bottom:1px solid #444;padding:8px 14px;display:flex;gap:12px;font-family:monospace;font-size:11px;color:#aaa">
+                <span style="color:#7dd3fc">No.</span><span style="color:#7dd3fc">Time</span><span style="color:#7dd3fc">Source</span><span style="color:#7dd3fc">Destination</span><span style="color:#7dd3fc">Protocol</span><span style="color:#7dd3fc">Info</span>
+              </div>
+              <div id="ws-rows" style="font-family:monospace;font-size:11px">
+                <div style="padding:6px 14px;border-bottom:1px solid #333;color:#e2e8f0;cursor:pointer" onclick="wsSelect('telnet')">
+                  <span style="color:#aaa;margin-right:8px">1</span>
+                  <span style="color:#aaa;margin-right:8px">0.000</span>
+                  <span style="color:#fca5a5;margin-right:8px">10.0.0.55</span>
+                  <span style="color:#fca5a5;margin-right:8px">10.0.0.10</span>
+                  <span style="color:#fbbf24;margin-right:8px">TELNET</span>
+                  <span style="color:#e2e8f0">Data: brukernavn=admin passord=Pa$$w0rd123</span>
+                </div>
+                <div style="padding:6px 14px;border-bottom:1px solid #333;color:#e2e8f0;cursor:pointer" onclick="wsSelect('ssh')">
+                  <span style="color:#aaa;margin-right:8px">2</span>
+                  <span style="color:#aaa;margin-right:8px">0.142</span>
+                  <span style="color:#86efac;margin-right:8px">10.0.0.66</span>
+                  <span style="color:#86efac;margin-right:8px">10.0.0.10</span>
+                  <span style="color:#60a5fa;margin-right:8px">SSH</span>
+                  <span style="color:#e2e8f0">Encrypted packet (len=248)</span>
+                </div>
+                <div style="padding:6px 14px;border-bottom:1px solid #333;color:#e2e8f0;cursor:pointer" onclick="wsSelect('ssh2')">
+                  <span style="color:#aaa;margin-right:8px">3</span>
+                  <span style="color:#aaa;margin-right:8px">0.198</span>
+                  <span style="color:#86efac;margin-right:8px">10.0.0.10</span>
+                  <span style="color:#86efac;margin-right:8px">10.0.0.66</span>
+                  <span style="color:#60a5fa;margin-right:8px">SSH</span>
+                  <span style="color:#e2e8f0">Encrypted packet (len=192)</span>
+                </div>
+              </div>
+              <div id="ws-detail" style="background:#111827;border-top:1px solid #444;padding:12px 14px;font-family:monospace;font-size:11px;color:#9ca3af;display:none;min-height:80px"></div>
+            </div>
+          </div>
+          <div class="lab-term" style="max-height:160px">
+            <div class="lab-term-body" id="tb5"><div class="lt-info">Prøv: ssh</div></div>
+            <div class="lab-term-input"><span class="lt-ps1">student@cyberlab:~$&nbsp;</span><input class="lt-in" id="ti5" placeholder="skriv kommando..." autocomplete="off"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAB 6: Angriper inne i nettverket ─────────────────── -->
+<div class="lab-card" id="net-6" data-level="hard">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">06</span>
+    <span class="lab-title">Angriper i nettverket — rekognosering innenfra</span>
+    <div class="lab-meta"><span class="badge badge-hard">Hard</span><span class="level-badge lb-5" style="margin:0">Nivå 6</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-5">Nivå 6 — Intern rekognosering</div>
+        <p class="lab-desc">Du har nettopp fått tilgang til én maskin i bedriftsnettverket <code>192.168.10.0/24</code>. Du vet ingenting om resten av nettverket. Bruk kun terminalen.</p>
+        <div>
+          <div class="obj-title">Mål</div>
+          <div class="obj-item"><div class="obj-num">1</div><div class="obj-text">Finn ut hvem maskinen er og hvor den er i nettverket</div></div>
+          <div class="obj-item"><div class="obj-num">2</div><div class="obj-text">Finn andre aktive maskiner uten å sende mye trafikk</div></div>
+          <div class="obj-item"><div class="obj-num">3</div><div class="obj-text">Identifiser tjenester som kjører på nettverket</div></div>
+          <div class="obj-item"><div class="obj-num">4</div><div class="obj-text">Skriv rekkefølgen på kommandoene du brukte, og forklar hvilke er mest "stille"</div></div>
+        </div>
+        <div>
+          <button class="hint-btn" onclick="toggleHint(this)">▶ Hint</button>
+          <div class="hint-box">Prøv rekkefølgen: <code>whoami</code> → <code>ipconfig</code> → <code>arp -a</code> → <code>netstat -an</code> → <code>nslookup</code>.<br><br><code>arp -a</code> viser maskiner som allerede er i ARP-cachen — helt stille, ingen ny nettverkstrafikk.</div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box"><strong>Stileste til støyest:</strong><br>1. <code>whoami</code>, <code>ipconfig</code> — kun lokal info, null nettverkstrafikk<br>2. <code>arp -a</code> — leser lokal cache, ingen pakker<br>3. <code>netstat -an</code> — viser eksisterende tilkoblinger, ingen nye<br>4. <code>nslookup</code> — kun DNS-forespørsler<br>5. <code>ping</code> sweep — genererer ICMP, lett å oppdage i IDS</div>
+        </div>
+        <div class="complete-banner" id="done-net-6"><span>✓</span> Lab 6 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('net-6')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar">
+            <div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div>
+            <div class="fake-url">Terminal — angriper@kompromittert-pc (192.168.10.45)</div>
+          </div>
+          <div class="lab-term" style="flex:1">
+            <div class="lab-term-body" id="tb6">
+              <div class="lt-info">Du er inne. Finn ut hva som er rundt deg.</div>
+              <div class="lt-out">Last login: Mon Mar 24 02:31:44 2026 from 185.220.101.34</div>
+            </div>
+            <div class="lab-term-input"><span class="lt-ps1">angriper@win-pc:~$&nbsp;</span><input class="lt-in" id="ti6" placeholder="skriv kommando..." autocomplete="off"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+  <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap">
+    <a href="../index.html" class="btn btn-ghost">← Hjem</a>
+    <a href="kryptografi.html" class="btn btn-success">Neste modul: Kryptografi →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container"><div class="footer-inner"><span>CyberLab</span><span><a href="../index.html">← Hjem</a></span></div></div>
+</footer>
+
+<script src="../js/cyberlab.js"></script>
+<script>
+const NETTERM = {
+  ipconfig:[
+    {t:'lt-info',v:'Windows IP Configuration'},
+    {t:'lt-out', v:''},
+    {t:'lt-info',v:'Ethernet adapter Ethernet:'},
+    {t:'lt-out', v:'   IPv4 Address. . . . . : 192.168.1.105'},
+    {t:'lt-out', v:'   Subnet Mask . . . . . : 255.255.255.0'},
+    {t:'lt-out', v:'   Default Gateway . . . : 192.168.1.1'},
+    {t:'lt-info',v:''},
+    {t:'lt-info',v:'Wireless LAN adapter Wi-Fi:'},
+    {t:'lt-out', v:'   IPv4 Address. . . . . : 192.168.0.42'},
+    {t:'lt-out', v:'   Subnet Mask . . . . . : 255.255.255.0'},
+    {t:'lt-out', v:'   Default Gateway . . . : 192.168.0.1'},
+  ],
+  ifconfig:[
+    {t:'lt-info',v:'eth0: flags=4163<UP,BROADCAST,RUNNING>  mtu 1500'},
+    {t:'lt-out', v:'        inet 192.168.1.105  netmask 255.255.255.0'},
+    {t:'lt-out', v:'        inet6 fe80::a00:27ff:fe4e:66a1  prefixlen 64'},
+    {t:'lt-info',v:'lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536'},
+    {t:'lt-out', v:'        inet 127.0.0.1  netmask 255.0.0.0'},
+  ],
+  'ip a':[
+    {t:'lt-info',v:'2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP>'},
+    {t:'lt-out', v:'    inet 192.168.1.105/24 brd 192.168.1.255'},
+    {t:'lt-out', v:'    inet6 fe80::a00:27ff:fe4e:66a1/64'},
+  ],
+  nslookup:[
+    {t:'lt-out', v:'Server:  8.8.8.8'},
+    {t:'lt-out', v:'Address: 8.8.8.8#53'},
+    {t:'lt-out', v:''},
+    {t:'lt-info',v:'Non-authoritative answer:'},
+    {t:'lt-out', v:'Name:    vg.no'},
+    {t:'lt-out', v:'Address: 195.88.55.16'},
+    {t:'lt-out', v:'Address: 195.88.55.17'},
+  ],
+  'nslookup vg.no':[
+    {t:'lt-out', v:'Server:  8.8.8.8'},
+    {t:'lt-info',v:'Non-authoritative answer:'},
+    {t:'lt-out', v:'Name: vg.no  Address: 195.88.55.16'},
+    {t:'lt-out', v:'Name: vg.no  Address: 195.88.55.17'},
+  ],
+  'nslookup -type=mx vg.no':[
+    {t:'lt-info',v:'Non-authoritative answer:'},
+    {t:'lt-out', v:'vg.no   mail exchanger = 10 mail1.vg.no'},
+    {t:'lt-out', v:'vg.no   mail exchanger = 20 mail2.vg.no'},
+    {t:'lt-info',v:'// MX-records avslører e-postservere — brukes til phishing-planlegging'},
+  ],
+  ping:[
+    {t:'lt-info',v:'Pinging vg.no [195.88.55.16] with 32 bytes of data:'},
+    {t:'lt-out', v:'Reply from 195.88.55.16: bytes=32 time=12ms TTL=55'},
+    {t:'lt-out', v:'Reply from 195.88.55.16: bytes=32 time=11ms TTL=55'},
+    {t:'lt-out', v:'Reply from 195.88.55.16: bytes=32 time=13ms TTL=55'},
+    {t:'lt-info',v:'Packets: Sent=3, Received=3, Lost=0 (0% loss)'},
+  ],
+  netstat:[
+    {t:'lt-info',v:'Proto  Local Address          Foreign Address         State'},
+    {t:'lt-out', v:'TCP    0.0.0.0:80             0.0.0.0:0               LISTENING'},
+    {t:'lt-out', v:'TCP    0.0.0.0:443            0.0.0.0:0               LISTENING'},
+    {t:'lt-out', v:'TCP    0.0.0.0:22             0.0.0.0:0               LISTENING'},
+    {t:'lt-err', v:'TCP    0.0.0.0:23             0.0.0.0:0               LISTENING   ← Telnet!'},
+    {t:'lt-err', v:'TCP    0.0.0.0:3306           0.0.0.0:0               LISTENING   ← DB eksponert!'},
+    {t:'lt-err', v:'TCP    0.0.0.0:4444           0.0.0.0:0               LISTENING   ← Bakdør!'},
+    {t:'lt-out', v:'TCP    10.0.0.5:443           185.31.18.185:52341     ESTABLISHED'},
+    {t:'lt-err', v:'TCP    10.0.0.5:4444          91.108.56.112:8080      ESTABLISHED ← C2 tilkobling!'},
+  ],
+  'netstat -an':[
+    {t:'lt-info',v:'Proto  Local Address          Foreign Address         State'},
+    {t:'lt-out', v:'TCP    0.0.0.0:80             0.0.0.0:0               LISTENING'},
+    {t:'lt-out', v:'TCP    0.0.0.0:443            0.0.0.0:0               LISTENING'},
+    {t:'lt-err', v:'TCP    0.0.0.0:4444           0.0.0.0:0               LISTENING'},
+    {t:'lt-err', v:'TCP    10.0.0.5:4444          91.108.56.112:8080      ESTABLISHED'},
+  ],
+  tracert:[
+    {t:'lt-info',v:'Tracing route to vg.no [195.88.55.16] over 30 hops:'},
+    {t:'lt-out', v:'  1    <1ms    <1ms    <1ms  192.168.1.1'},
+    {t:'lt-out', v:'  2     4ms     4ms     5ms  10.0.0.1'},
+    {t:'lt-out', v:'  3     *       *       *    Request timed out.'},
+    {t:'lt-out', v:'  4    11ms    10ms    11ms  ae0.cr1-osl1.telia.net [62.115.2.1]'},
+    {t:'lt-out', v:'  5    14ms    13ms    14ms  195.88.55.16'},
+    {t:'lt-info',v:'Trace complete.  // Hopp 3 blokkerer ICMP — men er fremdeles der'},
+  ],
+  traceroute:[
+    {t:'lt-info',v:'traceroute to vg.no (195.88.55.16), 30 hops max'},
+    {t:'lt-out', v:' 1  192.168.1.1  0.8ms'},
+    {t:'lt-out', v:' 2  10.0.0.1  4.3ms'},
+    {t:'lt-out', v:' 3  * * *'},
+    {t:'lt-out', v:' 4  ae0.cr1-osl1.telia.net  11.2ms'},
+    {t:'lt-out', v:' 5  195.88.55.16  14.8ms'},
+  ],
+  'tracert google.com':[
+    {t:'lt-info',v:'Tracing route to google.com [142.250.74.46] over 30 hops:'},
+    {t:'lt-out', v:'  1    <1ms   192.168.1.1'},
+    {t:'lt-out', v:'  2     4ms   10.0.0.1'},
+    {t:'lt-out', v:'  3    11ms   ae0.cr1-osl1.telia.net'},
+    {t:'lt-out', v:'  4    18ms   72.14.194.9  [Google backbone]'},
+    {t:'lt-out', v:'  5    20ms   142.250.74.46'},
+    {t:'lt-info',v:'Trace complete.'},
+  ],
+  ssh:[
+    {t:'lt-out', v:"The authenticity of host '192.168.1.50' can't be established."},
+    {t:'lt-out', v:'ED25519 key fingerprint is SHA256:abc123xyz789def456...'},
+    {t:'lt-info',v:'WARNING: Fingerprint endret siden sist! Mulig MITM-angrep!'},
+    {t:'lt-out', v:'Are you sure you want to continue? (yes/no): '},
+    {t:'lt-info',v:'// I motsetning til Telnet: passordet krypteres med AES-256'},
+  ],
+  whoami:[{t:'lt-out',v:'angriper'}],
+  'whoami /all':[
+    {t:'lt-out',v:'USER INFORMATION: angriper'},
+    {t:'lt-out',v:'GROUP INFORMATION: BUILTIN\\Users'},
+    {t:'lt-info',v:'// Ikke admin — eskalering nødvendig for full kontroll'},
+  ],
+  'arp -a':[
+    {t:'lt-info',v:'Interface: 192.168.10.45 on 0x4'},
+    {t:'lt-out', v:'  Internet Address    Physical Address    Type'},
+    {t:'lt-out', v:'  192.168.10.1        00-11-22-33-44-55   dynamic  [Gateway]'},
+    {t:'lt-out', v:'  192.168.10.10       aa-bb-cc-dd-ee-ff   dynamic  [Aktiv vert]'},
+    {t:'lt-out', v:'  192.168.10.20       11-22-33-44-55-66   dynamic  [Aktiv vert]'},
+    {t:'lt-info',v:'// ARP-cache: helt stille — ingen ny nettverkstrafikk generert'},
+  ],
+  pwd:[{t:'lt-out',v:'/home/angriper'}],
+  ls:[{t:'lt-out',v:'Desktop  Documents  Downloads  passwords.txt  '}],
+  'cat passwords.txt':[{t:'lt-info',v:'admin:Pa$$w0rd123\ndbuser:s3cr3t!\n// Se på det. Passord i klartekst.'}],
+  date:[{t:'lt-info',v:new Date().toString()}],
+  help:[
+    {t:'lt-info',v:'Tilgjengelige kommandoer:'},
+    {t:'lt-out', v:'  ipconfig / ifconfig / ip a   — nettverksinfo'},
+    {t:'lt-out', v:'  nslookup [domene]             — DNS-oppslag'},
+    {t:'lt-out', v:'  ping [vert]                   — tilgjengelighet'},
+    {t:'lt-out', v:'  netstat / netstat -an          — porter og tilkoblinger'},
+    {t:'lt-out', v:'  tracert / traceroute           — nettverksrute'},
+    {t:'lt-out', v:'  ssh                           — sikker tilkobling'},
+    {t:'lt-out', v:'  whoami / arp -a / pwd / ls    — systeminformasjon'},
+    {t:'lt-out', v:'  clear                         — tøm terminal'},
+  ],
+};
+
+// Wireshark packet detail
+function wsSelect(type){
+  const d=document.getElementById('ws-detail');
+  d.style.display='block';
+  if(type==='telnet'){
+    d.innerHTML='<span style="color:#fca5a5;font-weight:bold">TELNET — KLARTEKST</span><br>'+
+      'Source: 10.0.0.55:54321  →  Dest: 10.0.0.10:23<br>'+
+      '<span style="color:#fbbf24">Data payload (hex + ASCII):</span><br>'+
+      '75 73 65 72 6e 61 6d 65 3d 61 64 6d 69 6e  <span style="color:#f87171">username=admin</span><br>'+
+      '70 61 73 73 77 6f 72 64 3d 50 61 24 24 77  <span style="color:#f87171">password=Pa$$w0rd123</span><br>'+
+      '<span style="color:#fca5a5">→ Passord synlig i klartekst for alle på nettverket</span>';
+  } else {
+    d.innerHTML='<span style="color:#86efac;font-weight:bold">SSH — KRYPTERT</span><br>'+
+      'Source: 10.0.0.66:52341  →  Dest: 10.0.0.10:22<br>'+
+      '<span style="color:#60a5fa">Data payload (kryptert):</span><br>'+
+      '3d 8f a2 c1 44 e9 12 7b 9c 3f 81 d4 5a 2e  ????????????????<br>'+
+      'f1 0c 67 b3 9e 24 5d 8a 7f 16 c3 4b 2d e8  ????????????????<br>'+
+      '<span style="color:#86efac">→ Innhold uleselig — AES-256 kryptering</span>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  ['1','2','3','4','5','6'].forEach(n=>termInit('tb'+n,'ti'+n,NETTERM));
+});
+</script>
+</body>
+</html>

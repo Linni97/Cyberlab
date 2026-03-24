@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDS, IPS og Defense in Depth — CyberLab</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/lab-shared.css">
+<style>
+.back-link:hover{color:var(--red)}
+.mod-hero .section-title span{color:var(--red)}
+.log-line{display:flex;gap:10px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.03);font-family:var(--mono);font-size:12px;line-height:1.8}
+.log-line:last-child{border-bottom:none}
+.log-time{color:var(--text3);white-space:nowrap;flex-shrink:0}
+.log-sev{white-space:nowrap;flex-shrink:0;font-weight:700;min-width:68px}
+.log-sev.al{color:var(--red)}.log-sev.wn{color:var(--amber)}.log-sev.in{color:var(--blue)}.log-sev.dr{color:var(--purple)}
+.log-msg{color:var(--text2)}
+.log-line.hi{background:rgba(255,92,92,.07);border-radius:4px;padding:3px 6px}
+.log-viewer{background:#05070a;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:10px 0}
+.log-viewer-bar{background:var(--bg3);padding:8px 14px;font-family:var(--mono);font-size:11px;color:var(--text3);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px}
+.log-viewer-body{padding:12px 16px;max-height:320px;overflow-y:auto}
+.rule-out{font-family:var(--mono);font-size:12px;background:#070910;border:1px solid rgba(255,92,92,.3);border-radius:6px;padding:11px 14px;color:var(--red);word-break:break-all;line-height:1.7;margin-top:8px;min-height:36px}
+</style>
+</head>
+<body class="page">
+<nav class="nav">
+  <div class="nav-logo"><span class="bracket">[</span>CyberLab<span class="bracket">]</span></div>
+  <div class="nav-links">
+    <a href="../index.html" class="nav-link">Hjem</a>
+    <a href="nettverk.html" class="nav-link">Nettverk</a>
+    <a href="kryptografi.html" class="nav-link">Kryptografi</a>
+    <a href="xss.html" class="nav-link">XSS</a>
+    <a href="ids-ips.html" class="nav-link on">IDS/IPS</a>
+    <a href="epost-protokoller.html" class="nav-link">E-post</a>
+    <a href="kali.html" class="nav-link">Kali</a>
+  </div>
+</nav>
+
+<div class="container-sm page" style="padding-top:40px;padding-bottom:80px">
+  <a href="../index.html" class="back-link">← Tilbake</a>
+
+  <div class="mod-hero">
+    <div class="section-eyebrow">Modul 4</div>
+    <div class="section-title">IDS, IPS &amp; <span>Defense in Depth</span></div>
+    <p class="section-desc">Analyser ekte nettverkslogger, skriv og test Snort-regler, og jobb som SOC-analytiker i en simulert incident response.</p>
+    <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span class="badge badge-module">6 labber</span>
+      <span class="badge badge-easy">Nivå 1–2: Lett</span>
+      <span class="badge badge-medium">Nivå 3–4: Middels</span>
+      <span class="badge badge-hard">Nivå 5–6: Hard</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap" style="margin-bottom:28px">
+    <div class="progress-label"><span>Fremgang</span><span id="progressLabel">0 / 6 fullført</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+
+  <div class="filter-row">
+    <button class="filter-pill active-all" onclick="setFilter('all',this)">Alle</button>
+    <button class="filter-pill" onclick="setFilter('easy',this)">Lett</button>
+    <button class="filter-pill" onclick="setFilter('medium',this)">Middels</button>
+    <button class="filter-pill" onclick="setFilter('hard',this)">Hard</button>
+  </div>
+
+  <div class="tasks">
+
+<!-- LAB 1: IDS vs IPS quiz + plassering ──────────────── -->
+<div class="lab-card" id="ids-1" data-level="easy">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">01</span>
+    <span class="lab-title">IDS vs. IPS — plasser dem riktig i nettverket</span>
+    <div class="lab-meta"><span class="badge badge-easy">Lett</span><span class="level-badge lb-1" style="margin:0">Nivå 1</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-1">Nivå 1 — Grunnkonsepter</div>
+        <p class="lab-desc">Til høyre er et nettverksdiagram. Dra komponentene til riktig plassering — eller les og svar på spørsmålene under.</p>
+        <div>
+          <div class="obj-title">Mål</div>
+          <div class="obj-item"><div class="obj-num">1</div><div class="obj-text">Klikk på riktig svar for hvert spørsmål til høyre</div></div>
+          <div class="obj-item"><div class="obj-num">2</div><div class="obj-text">Forklar: hva betyr "inline" vs. "speilport (TAP)"?</div></div>
+          <div class="obj-item"><div class="obj-num">3</div><div class="obj-text">Forklar: hvorfor er falske positiver et større problem for IPS enn IDS?</div></div>
+        </div>
+        <div>
+          <button class="hint-btn" onclick="toggleHint(this)">▶ Hint</button>
+          <div class="hint-box">IPS sitter <strong>inline</strong> — all trafikk passerer gjennom den. En falsk positiv blokkerer legitim trafikk. IDS bruker en <strong>kopi</strong> av trafikken fra en speilport — en falsk positiv gir bare et unødvendig varsel.</div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box"><strong>IPS inline:</strong> Internett → IPS → Switch → Servere. All trafikk gjennom.<br><br><strong>NIDS speilport:</strong> Switch sender kopi til NIDS — original trafikk upåvirket.<br><br><strong>HIDS:</strong> Installert direkte på serveren — overvåker lokale filer og prosesser.</div>
+        </div>
+        <div class="complete-banner" id="done-ids-1"><span>✓</span> Lab 1 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('ids-1')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar"><div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div><div class="fake-url">IDS/IPS Placement Quiz</div></div>
+          <div class="site-wrap">
+            <div class="ts">
+              <div class="ts-nav" style="background:#7f1d1d"><span class="ts-logo">🛡 IDS/IPS Lab</span></div>
+              <div class="ts-body">
+                <div id="ids1-questions">
+                  <div class="ts-card" id="ids1-q1">
+                    <div class="ts-card-title" style="font-size:13px">Q1: Hvem sitter mellom internett og nettverket og <em>blokkerer</em> angrep aktivt?</div>
+                    <div style="display:flex;flex-direction:column;gap:6px;margin-top:10px">
+                      <button onclick="ids1ans(1,'wrong','IDS')" class="ts-btn" style="background:#6b7280;text-align:left;font-size:12px;padding:8px 12px">A) IDS — Intrusion Detection System</button>
+                      <button onclick="ids1ans(1,'correct','IPS')" class="ts-btn" style="background:#6b7280;text-align:left;font-size:12px;padding:8px 12px">B) IPS — Intrusion Prevention System</button>
+                      <button onclick="ids1ans(1,'wrong','HIDS')" class="ts-btn" style="background:#6b7280;text-align:left;font-size:12px;padding:8px 12px">C) HIDS — Host-based IDS</button>
+                    </div>
+                    <div id="ids1-fb1" style="display:none;margin-top:8px;font-size:12px"></div>
+                  </div>
+                  <div class="ts-card" id="ids1-q2">
+                    <div class="ts-card-title" style="font-size:13px">Q2: Hvilken løsning ser kryptert trafikk <em>etter</em> at den er dekryptert?</div>
+                    <div style="display:flex;flex-direction:column;gap:6px;margin-top:10px">
+                      <button onclick="ids1ans(2,'wrong','NIDS')" class="ts-btn" style="background:#6b7280;text-align:left;font-size:12px;padding:8px 12px">A) NIDS — Network IDS</button>
+                      <button onclick="ids1ans(2,'correct','HIDS')" class="ts-btn" style="background:#6b7280;text-align:left;font-size:12px;padding:8px 12px">B) HIDS — Host-based IDS</button>
+                      <button onclick="ids1ans(2,'wrong','IPS')" class="ts-btn" style="background:#6b7280;text-align:left;font-size:12px;padding:8px 12px">C) IPS inline</button>
+                    </div>
+                    <div id="ids1-fb2" style="display:none;margin-top:8px;font-size:12px"></div>
+                  </div>
+                  <div class="ts-card" id="ids1-q3">
+                    <div class="ts-card-title" style="font-size:13px">Q3: Hva er anomalibasert deteksjon?</div>
+                    <div style="display:flex;flex-direction:column;gap:6px;margin-top:10px">
+                      <button onclick="ids1ans(3,'wrong','sig')" class="ts-btn" style="background:#6b7280;text-align:left;font-size:12px;padding:8px 12px">A) Matcher trafikk mot kjente angrepsignaturer</button>
+                      <button onclick="ids1ans(3,'correct','anom')" class="ts-btn" style="background:#6b7280;text-align:left;font-size:12px;padding:8px 12px">B) Varsler på avvik fra normaltrafikk — oppdager ukjente angrep</button>
+                      <button onclick="ids1ans(3,'wrong','block')" class="ts-btn" style="background:#6b7280;text-align:left;font-size:12px;padding:8px 12px">C) Blokkerer all trafikk som ikke er hvitelistet</button>
+                    </div>
+                    <div id="ids1-fb3" style="display:none;margin-top:8px;font-size:12px"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAB 2: Les Snort-regel ────────────────────────────── -->
+<div class="lab-card" id="ids-2" data-level="easy">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">02</span>
+    <span class="lab-title">Les og skriv Snort-regler</span>
+    <div class="lab-meta"><span class="badge badge-easy">Lett</span><span class="level-badge lb-2" style="margin:0">Nivå 2</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-2">Nivå 2 — Snort-regler</div>
+        <p class="lab-desc">Bruk regelbyggeren til høyre for å konstruere Snort-regler. Se den genererte regelen i sanntid.</p>
+        <div>
+          <div class="obj-title">Scenarioer å løse</div>
+          <div class="obj-item"><div class="obj-num">A</div><div class="obj-text">Alert på ICMP fra eksternt nett til ditt nett (ping sweep)</div></div>
+          <div class="obj-item"><div class="obj-num">B</div><div class="obj-text">Drop TCP fra eksternt til port 23 (Telnet)</div></div>
+          <div class="obj-item"><div class="obj-num">C</div><div class="obj-text">Alert på HTTP med content <code>cmd.exe</code></div></div>
+          <div class="obj-item"><div class="obj-num">D</div><div class="obj-text">Forklar: <code>alert</code> vs. <code>drop</code> — når bruker du hvilken?</div></div>
+        </div>
+        <div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box">
+            <strong>A:</strong> <code>alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:"ICMP Sweep"; sid:1001;)</code><br><br>
+            <strong>B:</strong> <code>drop tcp $EXTERNAL_NET any -> $HOME_NET 23 (msg:"Telnet Blocked"; sid:1002;)</code><br><br>
+            <strong>C:</strong> <code>alert tcp any any -> $HOME_NET 80 (msg:"Shell Injection"; content:"cmd.exe"; sid:1003;)</code><br><br>
+            <strong>Alert vs drop:</strong> Bruk <code>alert</code> mens du tester — ingen risiko for å blokkere legitimt. Bytt til <code>drop</code> i produksjon kun når du er trygg.
+          </div>
+        </div>
+        <div class="complete-banner" id="done-ids-2"><span>✓</span> Lab 2 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('ids-2')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar"><div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div><div class="fake-url">Snort Rule Builder</div></div>
+          <div class="site-wrap">
+            <div class="ts">
+              <div class="ts-nav" style="background:#1e3a5f"><span class="ts-logo">⚙ Snort Rule Builder</span></div>
+              <div class="ts-body">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px">
+                  <div><label style="font-size:11px;color:#888;display:block;margin-bottom:3px">ACTION</label>
+                    <select id="rb-action" onchange="buildRule()" class="ts-input" style="padding:7px 10px;font-size:12px"><option>alert</option><option>drop</option><option>log</option><option>reject</option></select></div>
+                  <div><label style="font-size:11px;color:#888;display:block;margin-bottom:3px">PROTOKOLL</label>
+                    <select id="rb-proto" onchange="buildRule()" class="ts-input" style="padding:7px 10px;font-size:12px"><option>tcp</option><option>udp</option><option>icmp</option><option>ip</option></select></div>
+                  <div><label style="font-size:11px;color:#888;display:block;margin-bottom:3px">RETNING</label>
+                    <select id="rb-dir" onchange="buildRule()" class="ts-input" style="padding:7px 10px;font-size:12px"><option value="->">→</option><option value="<>">↔</option></select></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 80px 1fr 80px;gap:8px;margin-bottom:8px">
+                  <div><label style="font-size:11px;color:#888;display:block;margin-bottom:3px">KILDE IP</label><input type="text" id="rb-src" value="$EXTERNAL_NET" oninput="buildRule()" class="ts-input" style="padding:7px 10px;font-size:12px"></div>
+                  <div><label style="font-size:11px;color:#888;display:block;margin-bottom:3px">PORT</label><input type="text" id="rb-sport" value="any" oninput="buildRule()" class="ts-input" style="padding:7px 10px;font-size:12px"></div>
+                  <div><label style="font-size:11px;color:#888;display:block;margin-bottom:3px">DEST IP</label><input type="text" id="rb-dst" value="$HOME_NET" oninput="buildRule()" class="ts-input" style="padding:7px 10px;font-size:12px"></div>
+                  <div><label style="font-size:11px;color:#888;display:block;margin-bottom:3px">PORT</label><input type="text" id="rb-dport" value="any" oninput="buildRule()" class="ts-input" style="padding:7px 10px;font-size:12px"></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+                  <div><label style="font-size:11px;color:#888;display:block;margin-bottom:3px">MSG</label><input type="text" id="rb-msg" value="Suspicious traffic" oninput="buildRule()" class="ts-input" style="padding:7px 10px;font-size:12px"></div>
+                  <div><label style="font-size:11px;color:#888;display:block;margin-bottom:3px">CONTENT (valgfritt)</label><input type="text" id="rb-content" placeholder="f.eks. cmd.exe" oninput="buildRule()" class="ts-input" style="padding:7px 10px;font-size:12px"></div>
+                </div>
+                <label style="font-size:11px;color:#888;display:block;margin-bottom:3px">GENERERT REGEL</label>
+                <div class="rule-out" id="rb-output"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAB 3: Logganalyse ───────────────────────────────── -->
+<div class="lab-card" id="ids-3" data-level="medium">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">03</span>
+    <span class="lab-title">Analyser Snort-logger — finn angrepet</span>
+    <div class="lab-meta"><span class="badge badge-medium">Middels</span><span class="level-badge lb-3" style="margin:0">Nivå 3</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-3">Nivå 3 — Logganalyse</div>
+        <p class="lab-desc">Logg-vieweren til høyre viser Snort-logger fra et bedriftsnettverk. Analyser og rekonstruer hva som skjedde.</p>
+        <div>
+          <div class="obj-title">Mål</div>
+          <div class="obj-item"><div class="obj-num">1</div><div class="obj-text">Klikk på logg-linjene og les detaljene</div></div>
+          <div class="obj-item"><div class="obj-num">2</div><div class="obj-text">Rekonstruer hendelsesforløpet kronologisk</div></div>
+          <div class="obj-item"><div class="obj-num">3</div><div class="obj-text">Hvilken IP er angriperen? Hvilken er kompromittert?</div></div>
+          <div class="obj-item"><div class="obj-num">4</div><div class="obj-text">Hva stoppet IPS, og hva kom gjennom?</div></div>
+        </div>
+        <div>
+          <button class="hint-btn" onclick="toggleHint(this)">▶ Hint</button>
+          <div class="hint-box">Port <code>4444</code> = Meterpreter reverse shell. Port <code>445</code> = SMB — brukt av WannaCry for lateral movement. <code>[DROP]</code> betyr IPS blokkerte.</div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box"><strong>Forløp:</strong> Brute force SSH → innlogging lykkes → intern scanning → reverse shell til C2 → IPS blokkerer SMB-exploit.<br><br><strong>Angriper:</strong> 192.168.10.5. <strong>Kompromittert:</strong> 192.168.1.10.<br><br><strong>Kom gjennom:</strong> SSH-innlogging + C2-tilkobling. <strong>Stoppet:</strong> SMB lateral movement.</div>
+        </div>
+        <div class="complete-banner" id="done-ids-3"><span>✓</span> Lab 3 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('ids-3')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar"><div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div><div class="fake-url">snort.log — klikk en linje for detaljer</div></div>
+          <div class="site-wrap" style="background:#05070a">
+            <div style="padding:12px 16px">
+              <div class="log-line"><span class="log-time">08:01:03</span><span class="log-sev in">[INFO]</span><span class="log-msg">TCP 192.168.1.45 → 8.8.8.8:443 ESTABLISHED</span></div>
+              <div class="log-line hi" onclick="ids3detail('brute1')" style="cursor:pointer"><span class="log-time">08:02:11</span><span class="log-sev al">[ALERT]</span><span class="log-msg">SSH Brute Force — 192.168.10.5 → 192.168.1.10:22 (1/5) 🔍</span></div>
+              <div class="log-line hi" onclick="ids3detail('brute5')" style="cursor:pointer"><span class="log-time">08:02:25</span><span class="log-sev al">[ALERT]</span><span class="log-msg">SSH Brute Force THRESHOLD — 192.168.10.5 → 192.168.1.10:22 (5/5) 🔍</span></div>
+              <div class="log-line hi" onclick="ids3detail('login')" style="cursor:pointer"><span class="log-time">08:03:02</span><span class="log-sev al">[ALERT]</span><span class="log-msg">SSH Login SUCCESS — 192.168.10.5 → 192.168.1.10:22 🔍</span></div>
+              <div class="log-line hi" onclick="ids3detail('scan')" style="cursor:pointer"><span class="log-time">08:03:15</span><span class="log-sev wn">[WARN]</span><span class="log-msg">Port scan — 192.168.1.10 scanning 192.168.1.0/24 🔍</span></div>
+              <div class="log-line hi" onclick="ids3detail('c2')" style="cursor:pointer"><span class="log-time">08:04:44</span><span class="log-sev al">[ALERT]</span><span class="log-msg">Outbound C2 — 192.168.1.10:4444 → 91.108.56.112:8080 🔍</span></div>
+              <div class="log-line hi" onclick="ids3detail('drop')" style="cursor:pointer"><span class="log-time">08:05:02</span><span class="log-sev dr">[DROP]</span><span class="log-msg">IPS blocked SMB exploit — 192.168.1.10 → 192.168.1.20:445 🔍</span></div>
+              <div class="log-line"><span class="log-time">08:09:55</span><span class="log-sev in">[INFO]</span><span class="log-msg">TCP 192.168.1.33 → 172.217.20.14:443 ESTABLISHED</span></div>
+            </div>
+            <div id="ids3-detail" style="display:none;background:#111;border-top:1px solid #333;padding:14px 16px;font-family:monospace;font-size:12px;color:#9ca3af;line-height:1.7"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAB 4: Alert fatigue ─────────────────────────────── -->
+<div class="lab-card" id="ids-4" data-level="medium">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">04</span>
+    <span class="lab-title">Alert fatigue — tun reglene</span>
+    <div class="lab-meta"><span class="badge badge-medium">Middels</span><span class="level-badge lb-3" style="margin:0">Nivå 4</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-3">Nivå 4 — Regeloptimalisering</div>
+        <p class="lab-desc">SOC-teamet drukner i 4200 alerts/dag. Til høyre kan du simulere hvilke regler som genererer flest falske positiver og fikse dem.</p>
+        <div>
+          <div class="obj-title">Mål</div>
+          <div class="obj-item"><div class="obj-num">1</div><div class="obj-text">Kjør simulatoren — se hvilke regler gir mest støy</div></div>
+          <div class="obj-item"><div class="obj-num">2</div><div class="obj-text">Forklar hvorfor Regel 1 og 3 er for brede</div></div>
+          <div class="obj-item"><div class="obj-num">3</div><div class="obj-text">Legg til <code>content</code> og <code>threshold</code> og se effekten</div></div>
+          <div class="obj-item"><div class="obj-num">4</div><div class="obj-text">Forklar: hva er alert fatigue og hvilken risiko medfører det?</div></div>
+        </div>
+        <div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box"><strong>Alert fatigue:</strong> For mange varsler → analytikere ignorerer dem → reelt angrep drukner i støy.<br><br><strong>Fix Regel 1:</strong> Fjern — normal HTTPS er ikke mistenkelig.<br><strong>Fix Regel 2:</strong> Legg til threshold (f.eks. 100 ICMP/10sek).<br><strong>Fix Regel 3:</strong> Legg til <code>content:"cmd.exe"</code> eller annet konkret mønster.</div>
+        </div>
+        <div class="complete-banner" id="done-ids-4"><span>✓</span> Lab 4 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('ids-4')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar"><div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div><div class="fake-url">Alert Volume Simulator</div></div>
+          <div class="site-wrap">
+            <div class="ts">
+              <div class="ts-nav" style="background:#7f1d1d"><span class="ts-logo">📊 Alert Simulator</span></div>
+              <div class="ts-body">
+                <div id="af-rules">
+                  <div class="ts-card" id="af-r1">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                      <div class="ts-card-title" style="font-size:12px">Regel 1: alert tcp any any → $HOME_NET 443</div>
+                      <span id="af-v1" class="ts-tag vuln">2000/dag</span>
+                    </div>
+                    <div style="font-size:11px;color:#666;margin:4px 0 8px">Ingen begrensning — matcher ALL HTTPS-trafikk</div>
+                    <div style="display:flex;gap:6px">
+                      <button class="ts-btn" style="background:#dc2626;font-size:11px;padding:5px 10px" onclick="afFix(1)">+ Legg til content-filter</button>
+                      <button class="ts-btn" style="background:#6b7280;font-size:11px;padding:5px 10px" onclick="afRemove(1)">Fjern regelen</button>
+                    </div>
+                  </div>
+                  <div class="ts-card" id="af-r2">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                      <div class="ts-card-title" style="font-size:12px">Regel 2: alert icmp any any → any any</div>
+                      <span id="af-v2" class="ts-tag vuln">1500/dag</span>
+                    </div>
+                    <div style="font-size:11px;color:#666;margin:4px 0 8px">Ingen begrensning — matcher ALL ICMP-trafikk</div>
+                    <div style="display:flex;gap:6px">
+                      <button class="ts-btn" style="background:#dc2626;font-size:11px;padding:5px 10px" onclick="afFix(2)">+ Legg til threshold</button>
+                    </div>
+                  </div>
+                  <div class="ts-card" id="af-r3">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                      <div class="ts-card-title" style="font-size:12px">Regel 3: alert tcp $HOME_NET any → any 80</div>
+                      <span id="af-v3" class="ts-tag vuln">700/dag</span>
+                    </div>
+                    <div style="font-size:11px;color:#666;margin:4px 0 8px">Ingen begrensning — matcher ALL utgående HTTP</div>
+                    <div style="display:flex;gap:6px">
+                      <button class="ts-btn" style="background:#dc2626;font-size:11px;padding:5px 10px" onclick="afFix(3)">+ Legg til content:"cmd.exe"</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="ts-card" style="background:#fef2f2">
+                  <div style="font-size:13px;font-weight:700;color:#991b1b">Total alert-volum: <span id="af-total">4200</span>/dag</div>
+                  <div style="width:100%;height:8px;background:#fee2e2;border-radius:4px;margin-top:8px;overflow:hidden">
+                    <div id="af-bar" style="height:100%;background:#dc2626;border-radius:4px;transition:width .5s;width:100%"></div>
+                  </div>
+                  <div style="font-size:11px;color:#888;margin-top:4px">Mål: under 200/dag for at SOC-teamet skal rekke å undersøke</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAB 5: Defense in depth ─────────────────────────── -->
+<div class="lab-card" id="ids-5" data-level="hard">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">05</span>
+    <span class="lab-title">Defense in Depth — bygg sikkerhetsarkitekturen</span>
+    <div class="lab-meta"><span class="badge badge-hard">Hard</span><span class="level-badge lb-4" style="margin:0">Nivå 5</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-4">Nivå 5 — Sikkerhetsarkitektur</div>
+        <p class="lab-desc">Til høyre er et angrepsscenario som kjøres trinn for trinn. For hvert trinn: plasser riktig forsvarstiltak og se om det stopper angrepet.</p>
+        <div>
+          <div class="obj-title">Mål</div>
+          <div class="obj-item"><div class="obj-num">1</div><div class="obj-text">Gå gjennom angrepet trinn for trinn</div></div>
+          <div class="obj-item"><div class="obj-num">2</div><div class="obj-text">Velg riktig forsvarstiltak for hvert trinn</div></div>
+          <div class="obj-item"><div class="obj-num">3</div><div class="obj-text">Forklar: hvorfor er ett lag aldri nok?</div></div>
+          <div class="obj-item"><div class="obj-num">4</div><div class="obj-text">Hva er den svakeste lenken i de fleste organisasjoner?</div></div>
+        </div>
+        <div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box"><strong>Defense in Depth:</strong> Hvert lag stopper angrepet hvis forrige lag feiler. Ingen enkelt teknologi er 100% effektiv.<br><br><strong>Svakeste lenke:</strong> Menneskene. Phishing er den vanligste angrepsvektoren — én klikk kan nullstille alle tekniske forsvarstiltak.</div>
+        </div>
+        <div class="complete-banner" id="done-ids-5"><span>✓</span> Lab 5 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('ids-5')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar"><div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div><div class="fake-url">Defense in Depth Simulator</div></div>
+          <div class="site-wrap">
+            <div class="ts">
+              <div class="ts-nav" style="background:#1e3a5f"><span class="ts-logo">🏰 Defense in Depth</span></div>
+              <div class="ts-body">
+                <div id="did-step-0">
+                  <div class="ts-card">
+                    <div class="ts-card-title">Scenario: Phishing → Ransomware</div>
+                    <div class="ts-card-sub">En ansatt mottar en phishing-epost med ondsinnet vedlegg. Gå gjennom hvert steg og velg forsvarstiltak.</div>
+                    <button class="ts-btn" style="background:#1e3a5f;margin-top:10px" onclick="didNext(1)">▶ Start scenario</button>
+                  </div>
+                </div>
+                <div id="did-steps" style="display:none"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAB 6: Full IR ───────────────────────────────────── -->
+<div class="lab-card" id="ids-6" data-level="hard">
+  <div class="lab-header" onclick="toggleTask(this)">
+    <span class="lab-num">06</span>
+    <span class="lab-title">SIEM Incident Response — nattlig innbrudd</span>
+    <div class="lab-meta"><span class="badge badge-hard">Hard</span><span class="level-badge lb-5" style="margin:0">Nivå 6</span><span class="lab-chev">▶</span></div>
+  </div>
+  <div class="lab-body">
+    <div class="lab-split">
+      <div class="lab-left">
+        <div class="level-badge lb-5">Nivå 6 — Full incident response</div>
+        <p class="lab-desc">Klokken 03:47 går alarmen. Du er ansvarlig analytiker. Analyser SIEM-loggene og ta beslutninger i sanntid.</p>
+        <div>
+          <div class="obj-title">Mål</div>
+          <div class="obj-item"><div class="obj-num">1</div><div class="obj-text">Les alle logg-linjer — forstå hva som skjedde</div></div>
+          <div class="obj-item"><div class="obj-num">2</div><div class="obj-text">Svar på de tre kritiske spørsmålene til høyre</div></div>
+          <div class="obj-item"><div class="obj-num">3</div><div class="obj-text">Skriv en incident-rapport på 5–8 setninger</div></div>
+          <div class="obj-item"><div class="obj-num">4</div><div class="obj-text">Hva er én enkel mekanisme som hadde forhindret alt dette?</div></div>
+        </div>
+        <div>
+          <button class="sol-btn" onclick="toggleSolution(this)">▶ Vis løsning</button>
+          <div class="sol-box"><strong>Rapport:</strong> Ekstern angriper brute-forcet admin-konto via Tor. Opprettet bakdørsbruker. Eksfiltrerte 2.3GB finansdata. IPS stoppet ransomware, men dataene er allerede stjålet (double extortion).<br><br><strong>Én mekanisme:</strong> MFA på alle adminkontoer eliminerer brute force fullstendig.</div>
+        </div>
+        <div class="complete-banner" id="done-ids-6"><span>✓</span> Lab 6 fullført!</div>
+        <button class="btn btn-success" style="margin-top:8px" onclick="markTaskDone('ids-6')">✓ Marker fullført</button>
+      </div>
+      <div class="lab-right">
+        <div class="fake-browser" style="flex-direction:column">
+          <div class="fake-bar"><div class="fake-dots"><div class="fdot fdot-r"></div><div class="fdot fdot-y"></div><div class="fdot fdot-g"></div></div><div class="fake-url">SIEM Dashboard — kritisk alert 03:47</div></div>
+          <div class="site-wrap" style="background:#05070a">
+            <div style="padding:12px 16px">
+              <div class="log-line hi" onclick="ids6detail(1)" style="cursor:pointer"><span class="log-time">03:31:02</span><span class="log-sev al">[ALERT]</span><span class="log-msg">Brute force — admin@domain.no fra Tor-exit 185.220.101.34 🔍</span></div>
+              <div class="log-line hi" onclick="ids6detail(2)" style="cursor:pointer"><span class="log-time">03:31:47</span><span class="log-sev al">[ALERT]</span><span class="log-msg">LOGIN SUCCESS — admin@domain.no fra 185.220.101.34 🔍</span></div>
+              <div class="log-line hi" onclick="ids6detail(3)" style="cursor:pointer"><span class="log-time">03:32:15</span><span class="log-sev wn">[WARN]</span><span class="log-msg">Ny admin opprettet: svc_backup2 av admin@domain.no 🔍</span></div>
+              <div class="log-line hi" onclick="ids6detail(4)" style="cursor:pointer"><span class="log-time">03:33:01</span><span class="log-sev al">[ALERT]</span><span class="log-msg">Mass file access — 4847 filer i /finance på 46 sek 🔍</span></div>
+              <div class="log-line hi" onclick="ids6detail(5)" style="cursor:pointer"><span class="log-time">03:34:22</span><span class="log-sev al">[ALERT]</span><span class="log-msg">Dataeksfiltrering — 2.3GB ut til 185.220.101.34:443 🔍</span></div>
+              <div class="log-line hi" onclick="ids6detail(6)" style="cursor:pointer"><span class="log-time">03:35:31</span><span class="log-sev dr">[DROP]</span><span class="log-msg">IPS blokkerte ransomware — kryptering av /shared/contracts 🔍</span></div>
+              <div class="log-line hi" onclick="ids6detail(7)" style="cursor:pointer"><span class="log-time">03:41:09</span><span class="log-sev wn">[WARN]</span><span class="log-msg">svc_backup2 innlogget fra intern maskin 10.0.0.88 🔍</span></div>
+            </div>
+            <div id="ids6-detail" style="display:none;background:#111;border-top:1px solid #333;padding:14px 16px;font-family:monospace;font-size:12px;color:#9ca3af;line-height:1.7"></div>
+            <div style="padding:12px 16px;border-top:1px solid #222">
+              <div style="font-size:12px;color:#f87171;font-weight:700;margin-bottom:8px">🚨 Kritiske spørsmål — svar nå:</div>
+              <div id="ids6-q1" style="margin-bottom:6px">
+                <div style="font-size:11px;color:#9ca3af;margin-bottom:4px">Q1: Hva er de 3 første tiltakene?</div>
+                <button onclick="ids6ans(1,'deaktiver')" style="background:#dc2626;color:#fff;border:none;border-radius:4px;padding:5px 10px;font-size:11px;cursor:pointer;margin-right:4px">Deaktiver kontoer</button>
+                <button onclick="ids6ans(1,'rapport')" style="background:#6b7280;color:#fff;border:none;border-radius:4px;padding:5px 10px;font-size:11px;cursor:pointer;margin-right:4px">Skriv rapport</button>
+                <button onclick="ids6ans(1,'vent')" style="background:#6b7280;color:#fff;border:none;border-radius:4px;padding:5px 10px;font-size:11px;cursor:pointer">Vent til morgen</button>
+              </div>
+              <div id="ids6-fb1" style="font-size:11px;min-height:16px;color:#4ade80"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+  <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap">
+    <a href="xss.html" class="btn btn-ghost">← XSS</a>
+    <a href="epost-protokoller.html" class="btn btn-success">Neste modul: E-post →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container"><div class="footer-inner"><span>CyberLab</span><span><a href="../index.html">← Hjem</a></span></div></div>
+</footer>
+
+<script src="../js/cyberlab.js"></script>
+<script>
+/* LAB 1: Quiz */
+function ids1ans(q,result,label){
+  const btns=document.getElementById('ids1-q'+q).querySelectorAll('button');
+  btns.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('ids1-fb'+q);
+  fb.style.display='block';
+  if(result==='correct'){fb.style.color='#16a34a';fb.textContent='✓ Riktig! '+label+' er svaret.';}
+  else{fb.style.color='#dc2626';fb.textContent='✗ Feil. Prøv å tenke på hvem som faktisk stopper/ser trafikken.';}
+}
+
+/* LAB 2: Rule builder */
+function buildRule(){
+  const a=document.getElementById('rb-action').value;
+  const p=document.getElementById('rb-proto').value;
+  const s=document.getElementById('rb-src').value||'any';
+  const sp=document.getElementById('rb-sport').value||'any';
+  const d=document.getElementById('rb-dir').value;
+  const ds=document.getElementById('rb-dst').value||'any';
+  const dp=document.getElementById('rb-dport').value||'any';
+  const m=document.getElementById('rb-msg').value||'Rule';
+  const c=document.getElementById('rb-content').value;
+  const sid=Math.floor(Math.random()*9000)+1000;
+  let opts=`msg:"${m}"; `;
+  if(c)opts+=`content:"${c}"; `;
+  opts+=`sid:${sid}; rev:1;`;
+  document.getElementById('rb-output').textContent=`${a} ${p} ${s} ${sp} ${d} ${ds} ${dp} (${opts})`;
+}
+document.addEventListener('DOMContentLoaded',buildRule);
+
+/* LAB 3: Log detail */
+const IDS3_DETAILS={
+  brute1:'SSH Brute Force Attempt #1\nKilde: 192.168.10.5 (ekstern)\nMål: 192.168.1.10:22\nRegeltype: Threshold — 5 forsøk/60sek\nStatus: Overvåker...',
+  brute5:'SSH Brute Force THRESHOLD REACHED\nKilde: 192.168.10.5\n5 forsøk på 14 sekunder!\nHandling: Alert sendt til SOC\nMerk: IDS varsler kun — stopper IKKE angrepet',
+  login:'SSH Login SUCCESS\nAngriperen gjettet riktig passord!\nBruker: root\nKilde: 192.168.10.5\n⚠ Maskinen 192.168.1.10 er nå kompromittert',
+  scan:'Internal Port Scan Detected\nKompromittert maskin 192.168.1.10 scanner nå alle\nhosts i 192.168.1.0/24 med ICMP sweep\n→ Angriper kartlegger nettverket for neste mål',
+  c2:'Reverse Shell / C2 Connection\nPort 4444 = Metasploit Meterpreter\nAngriperen har nå fjernkontroll over 192.168.1.10\nC2 server: 91.108.56.112 (kjent ondsinnet IP)\n⚠ Dataeksfiltrering mulig',
+  drop:'IPS BLOCKED — SMB Exploit Attempt\nPort 445 = SMB\nAngriperen prøvde å spre seg til 192.168.1.20\nIPS blokkerte pakken — lateral movement stoppet\n✓ Dette er hva IPS gjør som IDS ikke kan'
+};
+function ids3detail(key){
+  const d=document.getElementById('ids3-detail');
+  d.style.display='block';
+  d.innerHTML='<span style="color:#7dd3fc;font-weight:bold">DETALJ:</span><br>'+IDS3_DETAILS[key].replace(/\n/g,'<br>');
+}
+
+/* LAB 4: Alert fatigue */
+let afVals=[2000,1500,700];
+let afRemoved=[false,false,false];
+function updateAF(){
+  const total=afVals.reduce((a,b)=>a+b,0);
+  document.getElementById('af-total').textContent=total;
+  document.getElementById('af-bar').style.width=Math.min(100,total/42)+'%';
+  document.getElementById('af-bar').style.background=total<200?'#16a34a':total<1000?'#f59e0b':'#dc2626';
+}
+function afFix(n){
+  const map={1:200,2:50,3:30};
+  afVals[n-1]=map[n];
+  const tag=document.getElementById('af-v'+n);
+  tag.className='ts-tag safe-tag';
+  tag.textContent=map[n]+'/dag';
+  updateAF();
+}
+function afRemove(n){
+  afVals[n-1]=0;
+  document.getElementById('af-r'+n).style.opacity='0.4';
+  document.getElementById('af-v'+n).textContent='fjernet';
+  updateAF();
+}
+
+/* LAB 5: Defense in Depth */
+const DID_STEPS=[
+  {attack:'Ansatt mottar phishing-epost med ondsinnet Word-vedlegg',q:'Hvilket forsvarstiltak stopper dette?',opts:[{l:'E-post spam-filter + DMARC',c:true},{l:'Brannmur',c:false},{l:'IPS',c:false}]},
+  {attack:'Ansatt åpner vedlegget — makro prøver å kjøre',q:'Hva stopper makro-kjøring?',opts:[{l:'Deaktiver makroer som standard policy',c:true},{l:'Antivirus alene',c:false},{l:'VPN',c:false}]},
+  {attack:'Malware prøver å laste ned payload fra internett',q:'Hva kan blokkere utgående tilkobling til C2?',opts:[{l:'Brannmur + DNS-filtrering',c:true},{l:'HIDS',c:false},{l:'Passordpolicy',c:false}]},
+  {attack:'Malware er installert — prøver å spre seg lateralt',q:'Hva oppdager intern spredning?',opts:[{l:'NIDS på internt nett + EDR',c:true},{l:'Ekstern brannmur',c:false},{l:'SPF/DKIM',c:false}]},
+  {attack:'Angriper har full tilgang — prøver å kryptere filer',q:'Hva begrenser skaden av ransomware?',opts:[{l:'Offline backup + Least privilege tilgang',c:true},{l:'Sterkere passord',c:false},{l:'HTTPS',c:false}]},
+];
+let didCurrent=0;
+function didNext(n){
+  if(n>DID_STEPS.length){document.getElementById('did-steps').innerHTML+='<div class="ts-card" style="background:#f0fdf4;border-color:#86efac"><div class="ts-card-title" style="color:#166534">✓ Alle angrepsveier stoppet!</div><div class="ts-card-sub">Defense in Depth fungerte — hvert lag stoppet angrepet som kom gjennom forrige lag.</div></div>';return;}
+  const s=DID_STEPS[n-1];
+  document.getElementById('did-step-0').style.display='none';
+  document.getElementById('did-steps').style.display='block';
+  const d=document.getElementById('did-steps');
+  const div=document.createElement('div');
+  div.className='ts-card';
+  div.id='did-s'+n;
+  div.innerHTML=`<div style="background:#fef2f2;border-radius:4px;padding:8px 10px;margin-bottom:10px;font-size:12px;color:#991b1b"><strong>Angrep steg ${n}:</strong> ${s.attack}</div><div class="ts-card-sub" style="margin-bottom:8px">${s.q}</div><div style="display:flex;flex-direction:column;gap:6px">${s.opts.map(o=>`<button onclick="didAns(${n},${o.c},'${o.l}')" class="ts-btn" style="background:#6b7280;text-align:left;font-size:12px;padding:7px 12px">${o.l}</button>`).join('')}</div><div id="did-fb${n}" style="display:none;margin-top:8px;font-size:12px"></div>`;
+  d.appendChild(div);
+  d.scrollTop=d.scrollHeight;
+}
+function didAns(n,correct,label){
+  const fb=document.getElementById('did-fb'+n);
+  fb.style.display='block';
+  document.getElementById('did-s'+n).querySelectorAll('button').forEach(b=>b.disabled=true);
+  if(correct){fb.style.color='#16a34a';fb.innerHTML='✓ Riktig! <strong>'+label+'</strong> stopper dette angrepssteg.<br>Neste lag aktiveres...';setTimeout(()=>didNext(n+1),1200);}
+  else{fb.style.color='#dc2626';fb.textContent='✗ Ikke riktig for dette angrepsteget — prøv igjen.';}
+}
+
+/* LAB 6: IR */
+const IDS6_DETAILS={
+  1:'Brute Force Analyse\n185.220.101.34 er en kjent Tor-exit-node\n17 mislykkede pålogginger over 45 sekunder\nMøtpunkt: admin@domain.no bruker svakt passord\n→ MFA ville ha stoppet dette umiddelbart',
+  2:'Vellykket innlogging\nAngriperen gjettet/kraket passordet\nNormal innlogging — ingen anomali for IDS\nAktiv sesjon fra Tor-IP\n→ Anomalibasert IDS kunne flagget Tor-IP',
+  3:'Persistence-mekanisme\nsvc_backup2 = bakdørsbruker\nAngriperen sikrer tilgang selv om passordet endres\nKontoen opprettet 28 sekunder etter innlogging\n→ Klassisk persistence-teknikk (T1136 MITRE ATT&CK)',
+  4:'Mass Data Access\n4847 filer åpnet på 46 sekunder\nNormalt: maks 10-20 filer/minutt\nDLPsystem (Data Loss Prevention) ville varslet\n→ Finansdata er eksfiltrert',
+  5:'Dataeksfiltrering\n2.3 GB over HTTPS i 68 sekunder\nDatasrate: ~33 MB/s — unormalt høyt\nDestinasjon: Tor-exit-node\n→ "Double extortion": truer med publisering',
+  6:'IPS Blokkerte Ransomware\nRansomware-signatur gjenkjent\n/shared/contracts krypteringsforsøk stoppet\n✓ IPS fungerte\n⚠ MEN: dataene er allerede stjålet — for sent',
+  7:'Persistent bakdørstilgang\nsvc_backup2 aktiv fra intern maskin 10.0.0.88\nAngriperen er FREMDELES inne via intern maskin\nLateral movement lyktes på ett tidspunkt\n→ Isoler 10.0.0.88 umiddelbart'
+};
+function ids6detail(n){
+  const d=document.getElementById('ids6-detail');
+  d.style.display='block';
+  d.innerHTML='<span style="color:#7dd3fc;font-weight:bold">HENDELSE '+n+':</span><br>'+IDS6_DETAILS[n].replace(/\n/g,'<br>');
+}
+function ids6ans(q,ans){
+  const fb=document.getElementById('ids6-fb'+q);
+  if(ans==='deaktiver'){fb.textContent='✓ Riktig! Deaktiver begge kontoer + invalider sesjoner + blokker C2-IP + isoler 10.0.0.88';}
+  else if(ans==='rapport'){fb.textContent='Rapport er viktig — men ETTER umiddelbare tiltak. Angriperen er fremdeles aktiv!';}
+  else{fb.textContent='⚠ Angriperen er aktiv NÅ. Venter til morgen = 6+ timer med tilgang. Alltid responder umiddelbart.';}
+  document.getElementById('ids6-q1').querySelectorAll('button').forEach(b=>b.disabled=true);
+}
+</script>
+</body>
+</html>
