@@ -1,6 +1,6 @@
 # CyberLab
 
-🔗 **Live site:** [https://linni97.github.io/Cyberlab/](https://linni97.github.io/Cyberlab/)
+🔗 **Live site:** [https://linni97.github.io/cyberlab/](https://linni97.github.io/cyberlab/)
 
 ## About
 
