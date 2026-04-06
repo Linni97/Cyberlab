@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Labber — CyberLab</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Bricolage+Grotesque:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:32px}
+.module-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;display:flex;flex-direction:column;gap:14px;transition:all 0.2s;position:relative;overflow:hidden;text-decoration:none}
+.module-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.module-card.green::before{background:var(--green)}.module-card.blue::before{background:var(--blue)}
+.module-card.amber::before{background:var(--amber)}.module-card.red::before{background:var(--red)}
+.module-card.purple::before{background:var(--purple)}
+.module-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.module-icon{font-size:22px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);border-radius:10px}
+.module-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.module-title{font-size:17px;font-weight:700;letter-spacing:-0.01em}
+.module-desc{font-size:13px;color:var(--text2);line-height:1.6;font-weight:400}
+.module-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px;border-top:1px solid var(--border)}
+.module-tasks{font-family:var(--mono);font-size:11px;color:var(--text3)}
+.module-difficulty{display:flex;gap:5px}
+.diff-dot{width:7px;height:7px;border-radius:50%;background:var(--border2)}
+.diff-dot.on-easy{background:var(--green)}.diff-dot.on-medium{background:var(--amber)}.diff-dot.on-hard{background:var(--red)}
+.disclaimer{display:flex;align-items:flex-start;gap:12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-top:28px;margin-bottom:8px}
+.disclaimer-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.disclaimer-text{font-size:12px;color:var(--text3);line-height:1.7}
+</style>
+</head>
+<body class="page">
+<nav class="nav">
+  <div class="nav-logo"><span class="bracket">[</span>CyberLab<span class="bracket">]</span></div>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Hjem</a>
+    <a href="labber.html" class="nav-link on">Labber</a>
+    <a href="laering.html" class="nav-link">Læring</a>
+  </div>
+</nav>
+
+<div class="container-sm page" style="padding-top:40px;padding-bottom:80px">
+  <a href="index.html" class="back-link">← Hjem</a>
+  <div class="mod-hero">
+    <div class="section-eyebrow">Labber</div>
+    <div class="section-title">Labøvelser</div>
+    <p class="section-desc">Pensumsrelaterte labøvelser med interaktive oppgaver.</p>
+  </div>
+
+  <div class="disclaimer">
+    <span class="disclaimer-icon">ℹ️</span>
+    <span class="disclaimer-text"><strong>Merk:</strong> CyberLab benytter ingen ekte virtuelle maskiner. All simulasjon er bygget med HTML, CSS og JavaScript, noe som betyr at enkelte verktøy ikke vil oppføre seg nøyaktig slik du er vant til fra et reelt Linux-miljø.</span>
+  </div>
+
+  <div class="modules-grid">
+
+    <a href="modules/nettverk.html" class="module-card green">
+      <div class="module-top"><div class="module-icon">💻</div><span class="badge badge-module">Lab 1</span></div>
+      <div><div class="module-title">Nettverkskommandoer</div><div class="module-desc">ping, ipconfig, nslookup, netstat, ssh, traceroute — verktøyene som brukes av både systemadministratorer og angripere.</div></div>
+      <div class="module-footer"><span class="module-tasks">6 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
+    </a>
+
+    <a href="modules/kryptografi.html" class="module-card blue">
+      <div class="module-top"><div class="module-icon">🔒</div><span class="badge badge-module">Lab 2</span></div>
+      <div><div class="module-title">Kryptografi</div><div class="module-desc">Symmetrisk og asymmetrisk kryptering, hashing, salt, pepper og TLS i praksis.</div></div>
+      <div class="module-footer"><span class="module-tasks">6 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
+    </a>
+
+    <a href="modules/xss.html" class="module-card amber">
+      <div class="module-top"><div class="module-icon">⚠️</div><span class="badge badge-module">Lab 3</span></div>
+      <div><div class="module-title">XSS &amp; Nettsikkerhet</div><div class="module-desc">Reflected, stored og DOM-basert XSS med live øvingsapplikasjoner og fikseoppgaver.</div></div>
+      <div class="module-footer"><span class="module-tasks">7 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
+    </a>
+
+    <a href="modules/ids-ips.html" class="module-card red">
+      <div class="module-top"><div class="module-icon">🛡️</div><span class="badge badge-module">Lab 4</span></div>
+      <div><div class="module-title">IDS, IPS &amp; Forsvar i dybden</div><div class="module-desc">Intrusion Detection vs. Prevention, NIDS, HIDS, Snort-regler og lagdelt sikkerhet.</div></div>
+      <div class="module-footer"><span class="module-tasks">6 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
+    </a>
+
+    <a href="modules/epost-protokoller.html" class="module-card purple">
+      <div class="module-top"><div class="module-icon">✉️</div><span class="badge badge-module">Lab 5</span></div>
+      <div><div class="module-title">E-post &amp; Protokoller</div><div class="module-desc">SMTP, IMAP, SPF, DKIM, DMARC — og angrep mot e-postinfrastruktur.</div></div>
+      <div class="module-footer"><span class="module-tasks">5 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot"></div></div></div>
+    </a>
+
+    <a href="modules/kali.html" class="module-card" style="border-color:rgba(176,122,255,.3);background:linear-gradient(135deg,rgba(176,122,255,.07),rgba(176,122,255,.03))">
+      <div class="module-top"><div class="module-icon">🐉</div><span class="badge badge-module">Lab 6</span><span class="badge badge-new" style="margin-left:6px">Ny</span></div>
+      <div><div class="module-title">Kali Linux &amp; Penetrasjonstesting</div><div class="module-desc">nmap, Gobuster, Hydra, John the Ripper, Netcat — og ett komplett CTF-scenario med tre flagg å finne.</div></div>
+      <div class="module-footer"><span class="module-tasks">7 oppgaver · 🚩 3 flagg</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
+    </a>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <span>CyberLab — Fagskole Informasjonssikkerhet</span>
+      <span>Gratis &amp; åpen kildekode</span>
+    </div>
+  </div>
+</footer>
+<script src="js/cyberlab.js"></script>
+</body>
+</html>

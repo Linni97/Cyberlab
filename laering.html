@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Læringsressurser — CyberLab</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Bricolage+Grotesque:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.laering-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;display:flex;gap:24px;align-items:flex-start;text-decoration:none;transition:all .2s;position:relative;overflow:hidden;margin-bottom:16px}
+.laering-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--blue)}
+.laering-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.laering-icon{font-size:28px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);border-radius:12px;flex-shrink:0}
+.laering-body{flex:1}
+.laering-title{font-size:18px;font-weight:700;margin-bottom:6px}
+.laering-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:14px}
+.laering-tags{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:640px){.laering-card{flex-direction:column}.laering-icon{width:48px;height:48px;font-size:22px}}
+</style>
+</head>
+<body class="page">
+<nav class="nav">
+  <div class="nav-logo"><span class="bracket">[</span>CyberLab<span class="bracket">]</span></div>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Hjem</a>
+    <a href="labber.html" class="nav-link">Labber</a>
+    <a href="laering.html" class="nav-link on">Læring</a>
+  </div>
+</nav>
+
+<div class="container-sm page" style="padding-top:40px;padding-bottom:80px">
+  <a href="index.html" class="back-link">← Hjem</a>
+  <div class="mod-hero">
+    <div class="section-eyebrow">Læring</div>
+    <div class="section-title">Læringsressurser</div>
+    <p class="section-desc">Moduler med teori og veiledede labber for deg som ønsker en grundigere gjennomgang av et tema — fra grunnen av.</p>
+  </div>
+
+  <a href="modules/web-sårbarheter.html" class="laering-card">
+    <div class="laering-icon">🕷️</div>
+    <div class="laering-body">
+      <div class="laering-title">Web Sårbarheter</div>
+      <div class="laering-desc">En steg-for-steg gjennomgang av hvordan nettsider fungerer og hvordan de kan angripes. Fra HTML og CSS, via CIA-triaden, til SQL Injection, XSS og forsvarsteknikker. Alle labber har teoriforklaring, hint og løsningsforslag.</div>
+      <div class="laering-tags">
+        <span class="badge badge-easy">Lett: HTML, CSS, CIA</span>
+        <span class="badge badge-medium">Middels: SQL Injection</span>
+        <span class="badge badge-hard">Vanskelig: XSS, CMDi, CSP</span>
+        <span class="badge badge-module">11 labber</span>
+      </div>
+    </div>
+  </a>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <span>CyberLab — Fagskole Informasjonssikkerhet</span>
+      <span>Gratis &amp; åpen kildekode</span>
+    </div>
+  </div>
+</footer>
+<script src="js/cyberlab.js"></script>
+</body>
+</html>
