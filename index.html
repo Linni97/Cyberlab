@@ -18,40 +18,25 @@
 .stat:last-child{border-right:none}
 .stat-num{font-family:var(--mono);font-size:32px;font-weight:700;color:var(--green);line-height:1}
 .stat-label{font-size:12px;color:var(--text3);margin-top:6px;font-family:var(--mono)}
-.modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:32px}
-.module-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;display:flex;flex-direction:column;gap:14px;transition:all 0.2s;position:relative;overflow:hidden;text-decoration:none}
-.module-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.module-card.green::before{background:var(--green)}.module-card.blue::before{background:var(--blue)}
-.module-card.amber::before{background:var(--amber)}.module-card.red::before{background:var(--red)}
-.module-card.purple::before{background:var(--purple)}
-.module-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
-.module-icon{font-size:22px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);border-radius:10px}
-.module-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.module-title{font-size:17px;font-weight:700;letter-spacing:-0.01em}
-.module-desc{font-size:13px;color:var(--text2);line-height:1.6;font-weight:400}
-.module-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px;border-top:1px solid var(--border)}
-.module-tasks{font-family:var(--mono);font-size:11px;color:var(--text3)}
-.module-difficulty{display:flex;gap:5px}
-.diff-dot{width:7px;height:7px;border-radius:50%;background:var(--border2)}
-.diff-dot.on-easy{background:var(--green)}.diff-dot.on-medium{background:var(--amber)}.diff-dot.on-hard{background:var(--red)}
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
-.how-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px}
-.how-num{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--green);opacity:0.5;line-height:1;margin-bottom:12px}
-.how-title{font-size:15px;font-weight:700;margin-bottom:6px}
-.how-desc{font-size:13px;color:var(--text2);line-height:1.65;font-weight:400}
-.laering-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 0;margin:0}
-.laering-card{background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;display:flex;gap:24px;align-items:flex-start;text-decoration:none;transition:all .2s;position:relative;overflow:hidden}
-.laering-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--blue)}
-.laering-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
-.laering-icon{font-size:28px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);border-radius:12px;flex-shrink:0}
-.laering-body{flex:1}
-.laering-title{font-size:18px;font-weight:700;margin-bottom:6px}
-.laering-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:14px}
-.laering-tags{display:flex;gap:8px;flex-wrap:wrap}
-.disclaimer{display:flex;align-items:flex-start;gap:12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-top:28px}
-.disclaimer-icon{font-size:16px;flex-shrink:0;margin-top:1px}
-.disclaimer-text{font-size:12px;color:var(--text3);line-height:1.7}
-@media(max-width:640px){.stats-row{flex-direction:column}.stat{border-right:none;border-bottom:1px solid var(--border)}.stat:last-child{border-bottom:none}.how-grid{grid-template-columns:1fr}.laering-card{flex-direction:column}.laering-icon{width:48px;height:48px;font-size:22px}}
+
+/* Hacker terminal animation */
+.hacker-section{padding:60px 0;border-top:1px solid var(--border)}
+.hacker-terminal{background:#05070a;border:1px solid var(--border);border-radius:12px;overflow:hidden;max-width:780px;margin:40px auto 0;box-shadow:0 0 60px rgba(0,229,160,.07)}
+.ht-bar{background:#0d1117;padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)}
+.ht-dots{display:flex;gap:6px}
+.ht-dot{width:10px;height:10px;border-radius:50%}
+.ht-dot-r{background:#f87171}.ht-dot-y{background:#fbbf24}.ht-dot-g{background:#4ade80}
+.ht-title{font-family:var(--mono);font-size:12px;color:var(--text3)}
+.ht-body{padding:20px 24px;min-height:280px;position:relative;overflow:hidden}
+.ht-line{font-family:var(--mono);font-size:13px;line-height:1.9;opacity:0;animation:fadeIn .3s forwards}
+.ht-line.prompt{color:var(--green)}
+.ht-line.out{color:#9ca3af;padding-left:12px}
+.ht-line.warn{color:#f87171;padding-left:12px}
+.ht-line.info{color:#60a5fa;padding-left:12px}
+.ht-cursor{display:inline-block;width:8px;height:14px;background:var(--green);animation:blink .8s infinite;vertical-align:middle;margin-left:2px}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@media(max-width:640px){.stats-row{flex-direction:column}.stat{border-right:none;border-bottom:1px solid var(--border)}.stat:last-child{border-bottom:none}}
 </style>
 </head>
 <body class="page">
@@ -59,8 +44,8 @@
   <div class="nav-logo"><span class="bracket">[</span>CyberLab<span class="bracket">]</span></div>
   <div class="nav-links">
     <a href="index.html" class="nav-link active">Hjem</a>
-    <a href="#labber" class="nav-link">Labber</a>
-    <a href="#laering" class="nav-link">Læring</a>
+    <a href="labber.html" class="nav-link">Labber</a>
+    <a href="laering.html" class="nav-link">Læring</a>
   </div>
 </nav>
 
@@ -68,8 +53,8 @@
   <div class="container">
     <h1>Lær cybersikkerhet<br><span class="accent">hands-on</span><span class="dim">.</span></h1>
     <div class="hero-cta">
-      <a href="#labber" class="btn btn-success">Gå til labber →</a>
-      <a href="#laering" class="btn btn-ghost">Læringsressurser</a>
+      <a href="labber.html" class="btn btn-success">Gå til labber →</a>
+      <a href="laering.html" class="btn btn-ghost">Læringsressurser →</a>
     </div>
   </div>
 </section>
@@ -82,89 +67,18 @@
   </div>
 </div>
 
-<section id="labber" style="padding:20px 0 60px">
+<section class="hacker-section">
   <div class="container">
-    <div class="section-eyebrow">Labber</div>
-    <div class="section-title">Labøvelser</div>
-    <p class="section-desc">Pensumsrelaterte labøvelser med interaktive oppgaver.</p>
-
-    <div class="disclaimer">
-      <span class="disclaimer-icon">ℹ️</span>
-      <span class="disclaimer-text"><strong>Merk:</strong> CyberLab benytter ingen ekte virtuelle maskiner. All simulasjon er bygget med HTML, CSS og JavaScript, noe som betyr at enkelte verktøy ikke vil oppføre seg nøyaktig slik du er vant til fra et reelt Linux-miljø.</span>
-    </div>
-
-    <div class="modules-grid">
-
-      <a href="modules/nettverk.html" class="module-card green">
-        <div class="module-top"><div class="module-icon">💻</div><span class="badge badge-module">Lab 1</span></div>
-        <div><div class="module-title">Nettverkskommandoer</div><div class="module-desc">ping, ipconfig, nslookup, netstat, ssh, traceroute — verktøyene som brukes av både systemadministratorer og angripere.</div></div>
-        <div class="module-footer"><span class="module-tasks">6 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
-      </a>
-
-      <a href="modules/kryptografi.html" class="module-card blue">
-        <div class="module-top"><div class="module-icon">🔒</div><span class="badge badge-module">Lab 2</span></div>
-        <div><div class="module-title">Kryptografi</div><div class="module-desc">Symmetrisk og asymmetrisk kryptering, hashing, salt, pepper og TLS i praksis.</div></div>
-        <div class="module-footer"><span class="module-tasks">6 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
-      </a>
-
-      <a href="modules/xss.html" class="module-card amber">
-        <div class="module-top"><div class="module-icon">⚠️</div><span class="badge badge-module">Lab 3</span></div>
-        <div><div class="module-title">XSS &amp; Nettsikkerhet</div><div class="module-desc">Reflected, stored og DOM-basert XSS med live øvingsapplikasjoner og fikseoppgaver.</div></div>
-        <div class="module-footer"><span class="module-tasks">7 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
-      </a>
-
-      <a href="modules/ids-ips.html" class="module-card red">
-        <div class="module-top"><div class="module-icon">🛡️</div><span class="badge badge-module">Lab 4</span></div>
-        <div><div class="module-title">IDS, IPS &amp; Forsvar i dybden</div><div class="module-desc">Intrusion Detection vs. Prevention, NIDS, HIDS, Snort-regler og lagdelt sikkerhet.</div></div>
-        <div class="module-footer"><span class="module-tasks">6 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
-      </a>
-
-      <a href="modules/epost-protokoller.html" class="module-card purple">
-        <div class="module-top"><div class="module-icon">✉️</div><span class="badge badge-module">Lab 5</span></div>
-        <div><div class="module-title">E-post &amp; Protokoller</div><div class="module-desc">SMTP, IMAP, SPF, DKIM, DMARC — og angrep mot e-postinfrastruktur.</div></div>
-        <div class="module-footer"><span class="module-tasks">5 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot"></div></div></div>
-      </a>
-
-      <a href="modules/kali.html" class="module-card" style="border-color:rgba(176,122,255,.3);background:linear-gradient(135deg,rgba(176,122,255,.07),rgba(176,122,255,.03))">
-        <div class="module-top"><div class="module-icon">🐉</div><span class="badge badge-module">Lab 6</span><span class="badge badge-new" style="margin-left:6px">Ny</span></div>
-        <div><div class="module-title">Kali Linux &amp; Penetrasjonstesting</div><div class="module-desc">nmap, Gobuster, Hydra, John the Ripper, Netcat — og ett komplett CTF-scenario med tre flagg å finne.</div></div>
-        <div class="module-footer"><span class="module-tasks">7 oppgaver · 🚩 3 flagg</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-<section id="laering" class="laering-section">
-  <div class="container">
-    <div class="section-eyebrow">Læring</div>
-    <div class="section-title">Læringsressurser</div>
-    <p class="section-desc" style="margin-bottom:28px">Moduler med teori og veiledede labber for deg som ønsker en grundigere gjennomgang av et tema — fra grunnen av.</p>
-
-    <a href="modules/web-sårbarheter.html" class="laering-card">
-      <div class="laering-icon">🕷️</div>
-      <div class="laering-body">
-        <div class="laering-title">Web Sårbarheter</div>
-        <div class="laering-desc">En steg-for-steg gjennomgang av hvordan nettsider fungerer og hvordan de kan angripes. Fra HTML og CSS, via CIA-triaden, til SQL Injection, XSS og forsvarsteknikker. Alle labber har teoriforklaring, hint og løsningsforslag.</div>
-        <div class="laering-tags">
-          <span class="badge badge-easy">Grunnleggende: HTML, CSS, CIA</span>
-          <span class="badge badge-medium">Middels: SQL Injection</span>
-          <span class="badge badge-hard">Vanskelig: XSS, CMDi, CSP</span>
-          <span class="badge badge-module">11 labber</span>
-        </div>
+    <div class="section-eyebrow">Hva er CyberLab?</div>
+    <div class="section-title">Lær ved å gjøre</div>
+    <p class="section-desc">CyberLab er en gratis, nettleserbasert plattform for praktisk cybersikkerhetsopplæring. Ingen installasjoner. Ingen kontoer. Bare åpne en lab og begynn.</p>
+    <div class="hacker-terminal">
+      <div class="ht-bar">
+        <div class="ht-dots"><div class="ht-dot ht-dot-r"></div><div class="ht-dot ht-dot-y"></div><div class="ht-dot ht-dot-g"></div></div>
+        <span class="ht-title">student@cyberlab — bash</span>
       </div>
-    </a>
-  </div>
-</section>
-
-<section style="padding:60px 0">
-  <div class="container">
-    <div class="section-eyebrow">Slik fungerer det</div>
-    <div class="section-title">Ingen friksjon</div>
-    <div class="how-grid">
-      <div class="how-item"><div class="how-num">01</div><div class="how-title">Velg lab eller tema</div><div class="how-desc">Gå til en labøvelse eller en læringsressurs. Filtrer på nivå og hopp rett til der du er.</div></div>
-      <div class="how-item"><div class="how-num">02</div><div class="how-title">Løs oppgaven</div><div class="how-desc">Les teorien, kjør kommandoer i terminalen eller eksperimenter i de interaktive labapplikasjonene.</div></div>
-      <div class="how-item"><div class="how-num">03</div><div class="how-title">Hint og løsning</div><div class="how-desc">Sitter du fast? Ta et hint. Løsningen er alltid tilgjengelig om du trenger den.</div></div>
+      <div class="ht-body" id="ht-body">
+      </div>
     </div>
   </div>
 </section>
@@ -177,6 +91,51 @@
     </div>
   </div>
 </footer>
-<script src="js/cyberlab.js"></script>
+
+<script>
+var lines = [
+  {t:'prompt', s:'$ nmap -sV 192.168.1.0/24'},
+  {t:'out',    s:'Starting Nmap 7.94 — scanning 256 hosts...'},
+  {t:'info',   s:'Host 192.168.1.105 is up — open ports: 22/ssh, 80/http, 443/https'},
+  {t:'info',   s:'Host 192.168.1.201 is up — open ports: 21/ftp, 3306/mysql'},
+  {t:'prompt', s:'$ ssh admin@192.168.1.105'},
+  {t:'warn',   s:'Permission denied (publickey).'},
+  {t:'prompt', s:"$ hydra -l admin -P wordlist.txt ssh://192.168.1.105"},
+  {t:'out',    s:'[DATA] attacking ssh://192.168.1.105:22/'},
+  {t:'info',   s:'[22][ssh] host: 192.168.1.105  login: admin  password: admin123'},
+  {t:'prompt', s:'$ ssh admin@192.168.1.105'},
+  {t:'out',    s:'Welcome to Ubuntu 22.04 LTS'},
+  {t:'prompt', s:'$ whoami'},
+  {t:'info',   s:'admin'},
+  {t:'prompt', s:'$ cat /etc/passwd | grep -v nologin'},
+  {t:'out',    s:'root:x:0:0:root:/root:/bin/bash'},
+  {t:'out',    s:'admin:x:1000:1000::/home/admin:/bin/bash'},
+  {t:'prompt', s:'$ _'},
+];
+
+var body = document.getElementById('ht-body');
+var i = 0;
+var delay = 0;
+
+function addLine(line, d) {
+  setTimeout(function() {
+    var el = document.createElement('div');
+    el.className = 'ht-line ' + line.t;
+    el.textContent = line.s;
+    el.style.animationDelay = '0s';
+    if (i === lines.length - 1) {
+      el.innerHTML = line.s.replace('_', '') + '<span class="ht-cursor"></span>';
+    }
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+  }, d);
+}
+
+lines.forEach(function(line, idx) {
+  delay += idx === 0 ? 400 : (line.t === 'prompt' ? 900 : 300);
+  addLine(line, delay);
+  i = idx;
+});
+</script>
 </body>
 </html>
