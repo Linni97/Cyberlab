@@ -39,16 +39,16 @@
 .how-num{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--green);opacity:0.5;line-height:1;margin-bottom:12px}
 .how-title{font-size:15px;font-weight:700;margin-bottom:6px}
 .how-desc{font-size:13px;color:var(--text2);line-height:1.65;font-weight:400}
-.selvstudie-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 0;margin:0}
-.selvstudie-card{background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;display:flex;gap:24px;align-items:flex-start;text-decoration:none;transition:all .2s;position:relative;overflow:hidden}
-.selvstudie-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--blue)}
-.selvstudie-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
-.selvstudie-icon{font-size:28px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);border-radius:12px;flex-shrink:0}
-.selvstudie-body{flex:1}
-.selvstudie-title{font-size:18px;font-weight:700;margin-bottom:6px}
-.selvstudie-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:14px}
-.selvstudie-tags{display:flex;gap:8px;flex-wrap:wrap}
-@media(max-width:640px){.stats-row{flex-direction:column}.stat{border-right:none;border-bottom:1px solid var(--border)}.stat:last-child{border-bottom:none}.how-grid{grid-template-columns:1fr}.selvstudie-card{flex-direction:column}.selvstudie-icon{width:48px;height:48px;font-size:22px}}
+.laering-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 0;margin:0}
+.laering-card{background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;display:flex;gap:24px;align-items:flex-start;text-decoration:none;transition:all .2s;position:relative;overflow:hidden}
+.laering-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--blue)}
+.laering-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.laering-icon{font-size:28px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);border-radius:12px;flex-shrink:0}
+.laering-body{flex:1}
+.laering-title{font-size:18px;font-weight:700;margin-bottom:6px}
+.laering-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:14px}
+.laering-tags{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:640px){.stats-row{flex-direction:column}.stat{border-right:none;border-bottom:1px solid var(--border)}.stat:last-child{border-bottom:none}.how-grid{grid-template-columns:1fr}.laering-card{flex-direction:column}.laering-icon{width:48px;height:48px;font-size:22px}}
 </style>
 </head>
 <body class="page">
@@ -57,7 +57,7 @@
   <div class="nav-links">
     <a href="index.html" class="nav-link active">Hjem</a>
     <a href="#labber" class="nav-link">Labber</a>
-    <a href="#selvstudie" class="nav-link">Selvstudie</a>
+    <a href="#laering" class="nav-link">Læring</a>
   </div>
 </nav>
 
@@ -66,7 +66,7 @@
     <h1>Lær cybersikkerhet<br><span class="accent">hands-on</span><span class="dim">.</span></h1>
     <div class="hero-cta">
       <a href="#labber" class="btn btn-success">Gå til labber →</a>
-      <a href="#selvstudie" class="btn btn-ghost">Selvstudie</a>
+      <a href="#laering" class="btn btn-ghost">Læringsressurser</a>
     </div>
   </div>
 </section>
@@ -126,18 +126,18 @@
   </div>
 </section>
 
-<section id="selvstudie" class="selvstudie-section">
+<section id="laering" class="laering-section">
   <div class="container">
-    <div class="section-eyebrow">Selvstudie</div>
+    <div class="section-eyebrow">Læring</div>
     <div class="section-title">Læringsressurser</div>
     <p class="section-desc" style="margin-bottom:28px">Moduler med teori og veiledede labber for deg som ønsker en grundigere gjennomgang av et tema — fra grunnen av.</p>
 
-    <a href="modules/web-sårbarheter.html" class="selvstudie-card">
-      <div class="selvstudie-icon">🕷️</div>
-      <div class="selvstudie-body">
-        <div class="selvstudie-title">Web Sårbarheter</div>
-        <div class="selvstudie-desc">En steg-for-steg gjennomgang av hvordan nettsider fungerer og hvordan de kan angripes. Fra HTML og CSS, via CIA-triaden, til SQL Injection, XSS og forsvarsteknikker. Alle labber har teoriforklaring, hint og løsningsforslag.</div>
-        <div class="selvstudie-tags">
+    <a href="modules/web-sårbarheter.html" class="laering-card">
+      <div class="laering-icon">🕷️</div>
+      <div class="laering-body">
+        <div class="laering-title">Web Sårbarheter</div>
+        <div class="laering-desc">En steg-for-steg gjennomgang av hvordan nettsider fungerer og hvordan de kan angripes. Fra HTML og CSS, via CIA-triaden, til SQL Injection, XSS og forsvarsteknikker. Alle labber har teoriforklaring, hint og løsningsforslag.</div>
+        <div class="laering-tags">
           <span class="badge badge-easy">Grunnleggende: HTML, CSS, CIA</span>
           <span class="badge badge-medium">Middels: SQL Injection</span>
           <span class="badge badge-hard">Avansert: XSS, CMDi, CSP</span>
@@ -153,7 +153,7 @@
     <div class="section-eyebrow">Slik fungerer det</div>
     <div class="section-title">Ingen friksjon</div>
     <div class="how-grid">
-      <div class="how-item"><div class="how-num">01</div><div class="how-title">Velg lab eller tema</div><div class="how-desc">Gå til en øvingslab eller en selvstudiemodule. Filtrer på vanskelighetsgrad og hopp rett til der du er.</div></div>
+      <div class="how-item"><div class="how-num">01</div><div class="how-title">Velg lab eller tema</div><div class="how-desc">Gå til en øvingslab eller en læringsressurs. Filtrer på vanskelighetsgrad og hopp rett til der du er.</div></div>
       <div class="how-item"><div class="how-num">02</div><div class="how-title">Løs oppgaven</div><div class="how-desc">Les teorien, kjør kommandoer i terminalen eller eksperimenter i de interaktive labapplikasjonene.</div></div>
       <div class="how-item"><div class="how-num">03</div><div class="how-title">Hint og løsning</div><div class="how-desc">Sitter du fast? Ta et hint. Løsningen er alltid tilgjengelig om du trenger den.</div></div>
     </div>
