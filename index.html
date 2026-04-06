@@ -39,7 +39,16 @@
 .how-num{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--green);opacity:0.5;line-height:1;margin-bottom:12px}
 .how-title{font-size:15px;font-weight:700;margin-bottom:6px}
 .how-desc{font-size:13px;color:var(--text2);line-height:1.65;font-weight:400}
-@media(max-width:640px){.stats-row{flex-direction:column}.stat{border-right:none;border-bottom:1px solid var(--border)}.stat:last-child{border-bottom:none}.how-grid{grid-template-columns:1fr}}
+.selvstudie-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 0;margin:0}
+.selvstudie-card{background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;display:flex;gap:24px;align-items:flex-start;text-decoration:none;transition:all .2s;position:relative;overflow:hidden}
+.selvstudie-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--blue)}
+.selvstudie-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.selvstudie-icon{font-size:28px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);border-radius:12px;flex-shrink:0}
+.selvstudie-body{flex:1}
+.selvstudie-title{font-size:18px;font-weight:700;margin-bottom:6px}
+.selvstudie-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:14px}
+.selvstudie-tags{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:640px){.stats-row{flex-direction:column}.stat{border-right:none;border-bottom:1px solid var(--border)}.stat:last-child{border-bottom:none}.how-grid{grid-template-columns:1fr}.selvstudie-card{flex-direction:column}.selvstudie-icon{width:48px;height:48px;font-size:22px}}
 </style>
 </head>
 <body class="page">
@@ -47,7 +56,8 @@
   <div class="nav-logo"><span class="bracket">[</span>CyberLab<span class="bracket">]</span></div>
   <div class="nav-links">
     <a href="index.html" class="nav-link active">Hjem</a>
-    <a href="modules/nettverk.html" class="nav-link">Moduler</a>
+    <a href="#labber" class="nav-link">Labber</a>
+    <a href="#selvstudie" class="nav-link">Selvstudie</a>
   </div>
 </nav>
 
@@ -55,82 +65,97 @@
   <div class="container">
     <h1>Lær cybersikkerhet<br><span class="accent">hands-on</span><span class="dim">.</span></h1>
     <div class="hero-cta">
-      <a href="modules/nettverk.html" class="btn btn-success">Start første modul →</a>
-      <a href="#moduler" class="btn btn-ghost">Se alle moduler</a>
+      <a href="#labber" class="btn btn-success">Gå til labber →</a>
+      <a href="#selvstudie" class="btn btn-ghost">Selvstudie</a>
     </div>
   </div>
 </section>
 
 <div class="container">
   <div class="stats-row">
-    <div class="stat"><div class="stat-num">7</div><div class="stat-label">Moduler</div></div>
-    <div class="stat"><div class="stat-num">56</div><div class="stat-label">Oppgaver</div></div>
-    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Nivåer</div></div>
-    <div class="stat"><div class="stat-num">0 kr</div><div class="stat-label">Kostnad</div></div>
+    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Labber</div></div>
+    <div class="stat"><div class="stat-num">37</div><div class="stat-label">Øvingsoppgaver</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Vanskelighetsgrader</div></div>
   </div>
 </div>
 
-<section id="moduler" style="padding:20px 0 60px">
+<section id="labber" style="padding:20px 0 60px">
   <div class="container">
-    <div class="section-eyebrow">Moduler</div>
-    <div class="section-title">Velg et tema</div>
-    <p class="section-desc">Hver modul har oppgaver på tre nivåer. Start med lett og jobb deg oppover.</p>
+    <div class="section-eyebrow">Labber</div>
+    <div class="section-title">Øvingsmoduler</div>
+    <p class="section-desc">Praktiske labber med terminal-simulator og live oppgaver. Tre vanskelighetsgrader — begynn der du er.</p>
     <div class="modules-grid">
 
       <a href="modules/nettverk.html" class="module-card green">
-        <div class="module-top"><div class="module-icon">💻</div><span class="badge badge-module">Modul 1</span></div>
-        <div><div class="module-title">Nettverkskommandoer</div><div class="module-desc">ping, ipconfig, nslookup, netstat, ssh, traceroute — verktøyene som brukes av både sysadmins og angripere.</div></div>
+        <div class="module-top"><div class="module-icon">💻</div><span class="badge badge-module">Lab 1</span></div>
+        <div><div class="module-title">Nettverkskommandoer</div><div class="module-desc">ping, ipconfig, nslookup, netstat, ssh, traceroute — verktøyene som brukes av både systemadministratorer og angripere.</div></div>
         <div class="module-footer"><span class="module-tasks">6 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
       </a>
 
       <a href="modules/kryptografi.html" class="module-card blue">
-        <div class="module-top"><div class="module-icon">🔒</div><span class="badge badge-module">Modul 2</span></div>
+        <div class="module-top"><div class="module-icon">🔒</div><span class="badge badge-module">Lab 2</span></div>
         <div><div class="module-title">Kryptografi</div><div class="module-desc">Symmetrisk og asymmetrisk kryptering, hashing, salt, pepper og TLS i praksis.</div></div>
         <div class="module-footer"><span class="module-tasks">6 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
       </a>
 
       <a href="modules/xss.html" class="module-card amber">
-        <div class="module-top"><div class="module-icon">⚠️</div><span class="badge badge-module">Modul 3</span></div>
-        <div><div class="module-title">XSS &amp; Websikkerhet</div><div class="module-desc">Reflected, stored og DOM-basert XSS med live øvingslabber og fikseoppgaver.</div></div>
+        <div class="module-top"><div class="module-icon">⚠️</div><span class="badge badge-module">Lab 3</span></div>
+        <div><div class="module-title">XSS &amp; Nettsikkerhet</div><div class="module-desc">Reflected, stored og DOM-basert XSS med live øvingsapplikasjoner og fikseoppgaver.</div></div>
         <div class="module-footer"><span class="module-tasks">7 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
       </a>
 
       <a href="modules/ids-ips.html" class="module-card red">
-        <div class="module-top"><div class="module-icon">🛡️</div><span class="badge badge-module">Modul 4</span></div>
-        <div><div class="module-title">IDS, IPS &amp; Defense in Depth</div><div class="module-desc">Intrusion Detection vs. Prevention, NIDS, HIDS, Snort og lagdelt sikkerhet.</div></div>
+        <div class="module-top"><div class="module-icon">🛡️</div><span class="badge badge-module">Lab 4</span></div>
+        <div><div class="module-title">IDS, IPS &amp; Forsvar i dybden</div><div class="module-desc">Intrusion Detection vs. Prevention, NIDS, HIDS, Snort-regler og lagdelt sikkerhet.</div></div>
         <div class="module-footer"><span class="module-tasks">6 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
       </a>
 
       <a href="modules/epost-protokoller.html" class="module-card purple">
-        <div class="module-top"><div class="module-icon">✉️</div><span class="badge badge-module">Modul 5</span></div>
+        <div class="module-top"><div class="module-icon">✉️</div><span class="badge badge-module">Lab 5</span></div>
         <div><div class="module-title">E-post &amp; Protokoller</div><div class="module-desc">SMTP, IMAP, SPF, DKIM, DMARC — og angrep mot e-postinfrastruktur.</div></div>
         <div class="module-footer"><span class="module-tasks">5 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot"></div></div></div>
       </a>
 
       <a href="modules/kali.html" class="module-card" style="border-color:rgba(176,122,255,.3);background:linear-gradient(135deg,rgba(176,122,255,.07),rgba(176,122,255,.03))">
-        <div class="module-top"><div class="module-icon">🐉</div><span class="badge badge-module">Modul 6</span><span class="badge badge-new" style="margin-left:6px">Ny</span></div>
-        <div><div class="module-title">Kali Linux &amp; Pentesting</div><div class="module-desc">nmap, Gobuster, Hydra, John the Ripper, Netcat — og ett komplett CTF-scenario med 3 flagg å finne.</div></div>
+        <div class="module-top"><div class="module-icon">🐉</div><span class="badge badge-module">Lab 6</span><span class="badge badge-new" style="margin-left:6px">Ny</span></div>
+        <div><div class="module-title">Kali Linux &amp; Penetrasjonstesting</div><div class="module-desc">nmap, Gobuster, Hydra, John the Ripper, Netcat — og ett komplett CTF-scenario med tre flagg å finne.</div></div>
         <div class="module-footer"><span class="module-tasks">7 oppgaver · 🚩 3 flagg</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
-      </a>
-
-      <a href="modules/web-sårbarheter.html" class="module-card blue">
-        <div class="module-top"><div class="module-icon">🕷️</div><span class="badge badge-module">Modul 7</span><span class="badge badge-new" style="margin-left:6px">Selvstudie</span></div>
-        <div><div class="module-title">Web Sårbarheter</div><div class="module-desc">HTML/CSS grunnlag, CIA-triaden, SQL Injection, XSS og CSP — med ekte sårbare apper du kan angripe.</div></div>
-        <div class="module-footer"><span class="module-tasks">11 oppgaver</span><div class="module-difficulty"><div class="diff-dot on-easy"></div><div class="diff-dot on-medium"></div><div class="diff-dot on-hard"></div></div></div>
       </a>
 
     </div>
   </div>
 </section>
 
-<section style="padding:20px 0 60px">
+<section id="selvstudie" class="selvstudie-section">
+  <div class="container">
+    <div class="section-eyebrow">Selvstudie</div>
+    <div class="section-title">Læringsressurser</div>
+    <p class="section-desc" style="margin-bottom:28px">Moduler med teori og veiledede labber for deg som ønsker en grundigere gjennomgang av et tema — fra grunnen av.</p>
+
+    <a href="modules/web-sårbarheter.html" class="selvstudie-card">
+      <div class="selvstudie-icon">🕷️</div>
+      <div class="selvstudie-body">
+        <div class="selvstudie-title">Web Sårbarheter</div>
+        <div class="selvstudie-desc">En steg-for-steg gjennomgang av hvordan nettsider fungerer og hvordan de kan angripes. Fra HTML og CSS, via CIA-triaden, til SQL Injection, XSS og forsvarsteknikker. Alle labber har teoriforklaring, hint og løsningsforslag.</div>
+        <div class="selvstudie-tags">
+          <span class="badge badge-easy">Grunnleggende: HTML, CSS, CIA</span>
+          <span class="badge badge-medium">Middels: SQL Injection</span>
+          <span class="badge badge-hard">Avansert: XSS, CMDi, CSP</span>
+          <span class="badge badge-module">11 labber</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section style="padding:60px 0">
   <div class="container">
     <div class="section-eyebrow">Slik fungerer det</div>
     <div class="section-title">Ingen friksjon</div>
     <div class="how-grid">
-      <div class="how-item"><div class="how-num">01</div><div class="how-title">Velg modul og nivå</div><div class="how-desc">Filtrer på lett, middels eller hard. Hopp rett til det som passer der du er.</div></div>
-      <div class="how-item"><div class="how-num">02</div><div class="how-title">Løs oppgaven</div><div class="how-desc">Les teorien, kjør kommandoer i terminalen eller eksperimenter i live-labene.</div></div>
-      <div class="how-item"><div class="how-num">03</div><div class="how-title">Hint og løsning</div><div class="how-desc">Sitter du fast? Ta et hint. Løsningen er alltid der om du trenger den.</div></div>
+      <div class="how-item"><div class="how-num">01</div><div class="how-title">Velg lab eller tema</div><div class="how-desc">Gå til en øvingslab eller en selvstudiemodule. Filtrer på vanskelighetsgrad og hopp rett til der du er.</div></div>
+      <div class="how-item"><div class="how-num">02</div><div class="how-title">Løs oppgaven</div><div class="how-desc">Les teorien, kjør kommandoer i terminalen eller eksperimenter i de interaktive labapplikasjonene.</div></div>
+      <div class="how-item"><div class="how-num">03</div><div class="how-title">Hint og løsning</div><div class="how-desc">Sitter du fast? Ta et hint. Løsningen er alltid tilgjengelig om du trenger den.</div></div>
     </div>
   </div>
 </section>
