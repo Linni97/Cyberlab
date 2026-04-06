@@ -48,6 +48,9 @@
 .laering-title{font-size:18px;font-weight:700;margin-bottom:6px}
 .laering-desc{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:14px}
 .laering-tags{display:flex;gap:8px;flex-wrap:wrap}
+.disclaimer{display:flex;align-items:flex-start;gap:12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-top:28px}
+.disclaimer-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.disclaimer-text{font-size:12px;color:var(--text3);line-height:1.7}
 @media(max-width:640px){.stats-row{flex-direction:column}.stat{border-right:none;border-bottom:1px solid var(--border)}.stat:last-child{border-bottom:none}.how-grid{grid-template-columns:1fr}.laering-card{flex-direction:column}.laering-icon{width:48px;height:48px;font-size:22px}}
 </style>
 </head>
@@ -82,8 +85,14 @@
 <section id="labber" style="padding:20px 0 60px">
   <div class="container">
     <div class="section-eyebrow">Labber</div>
-    <div class="section-title">Øvingsmoduler</div>
-    <p class="section-desc">Praktiske labber med terminal-simulator og live oppgaver. Tre vanskelighetsgrader — begynn der du er.</p>
+    <div class="section-title">Labøvelser</div>
+    <p class="section-desc">Pensumsrelaterte labøvelser med interaktiv terminal-simulator og live oppgaver knyttet til fagemnene som dekkes i studiet.</p>
+
+    <div class="disclaimer">
+      <span class="disclaimer-icon">ℹ️</span>
+      <span class="disclaimer-text"><strong>Merk:</strong> CyberLab benytter ingen ekte virtuelle maskiner. All simulasjon er bygget med HTML, CSS og JavaScript, noe som betyr at enkelte verktøy ikke vil oppføre seg nøyaktig slik du er vant til fra et reelt Linux-miljø.</span>
+    </div>
+
     <div class="modules-grid">
 
       <a href="modules/nettverk.html" class="module-card green">
@@ -153,7 +162,7 @@
     <div class="section-eyebrow">Slik fungerer det</div>
     <div class="section-title">Ingen friksjon</div>
     <div class="how-grid">
-      <div class="how-item"><div class="how-num">01</div><div class="how-title">Velg lab eller tema</div><div class="how-desc">Gå til en øvingslab eller en læringsressurs. Filtrer på vanskelighetsgrad og hopp rett til der du er.</div></div>
+      <div class="how-item"><div class="how-num">01</div><div class="how-title">Velg lab eller tema</div><div class="how-desc">Gå til en labøvelse eller en læringsressurs. Filtrer på vanskelighetsgrad og hopp rett til der du er.</div></div>
       <div class="how-item"><div class="how-num">02</div><div class="how-title">Løs oppgaven</div><div class="how-desc">Les teorien, kjør kommandoer i terminalen eller eksperimenter i de interaktive labapplikasjonene.</div></div>
       <div class="how-item"><div class="how-num">03</div><div class="how-title">Hint og løsning</div><div class="how-desc">Sitter du fast? Ta et hint. Løsningen er alltid tilgjengelig om du trenger den.</div></div>
     </div>
