@@ -1,52 +1,48 @@
 /* cyberlab.js — shared utilities */
 
-/* ── Auto-patch: konsistente labels og lenker på alle modul-sider ── */
+/* ── Auto-patch: kun aktiv på modul-sider (modules/) ── */
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Tilbake-lenke: alltid til labber.html, alltid teksten "← Tilbake"
-  document.querySelectorAll('a.back-link').forEach(el => {
-    el.textContent = '← Tilbake';
-    if (el.href.includes('index.html')) {
-      el.href = el.href.replace('index.html', 'labber.html');
-    }
-  });
+  const isModulePage = window.location.pathname.includes('/modules/');
 
-  // 2. Filter-pill: "Hard" → "Vanskelig"
+  if (isModulePage) {
+    // 1. Tilbake-lenke: alltid til labber.html, alltid teksten "← Tilbake"
+    document.querySelectorAll('a.back-link').forEach(el => {
+      el.textContent = '← Tilbake';
+      if (el.href.includes('index.html')) {
+        el.href = el.href.replace('index.html', 'labber.html');
+      }
+    });
+
+    // 2. Bunn-nav "← Hjem" → "← Labber"
+    document.querySelectorAll('a.btn.btn-ghost').forEach(el => {
+      if (el.textContent.trim() === '← Hjem') {
+        el.textContent = '← Labber';
+        el.href = el.href.replace('index.html', 'labber.html');
+      }
+      if (el.textContent.includes('Tilbake til oversikten')) {
+        el.textContent = '← Labber';
+        el.href = el.href.replace('index.html', 'labber.html');
+      }
+    });
+    document.querySelectorAll('a.btn.btn-success').forEach(el => {
+      if (el.textContent.includes('Tilbake til oversikten')) {
+        el.className = 'btn btn-ghost';
+        el.textContent = '← Labber';
+        el.href = el.href.replace('index.html', 'labber.html');
+      }
+    });
+  }
+
+  // 3. Filter-pill: "Hard" → "Vanskelig" (alle sider)
   document.querySelectorAll('.filter-pill').forEach(el => {
     if (el.textContent.trim() === 'Hard') el.textContent = 'Vanskelig';
   });
 
-  // 3. Badges: "Hard" → "Vanskelig"
-  document.querySelectorAll('.badge-hard, .badge').forEach(el => {
-    if (el.textContent.trim() === 'Hard') el.textContent = 'Vanskelig';
-  });
-
-  // 4. Mod-hero nivå-label: "Hard" → "Vanskelig"
+  // 4. Badges: "Hard" → "Vanskelig" (alle sider)
   document.querySelectorAll('.badge-hard').forEach(el => {
-    el.textContent = el.textContent.replace(/: Hard$/, ': Vanskelig').replace(/^Hard$/, 'Vanskelig');
-  });
-
-  // 5. Lab-meta badges i oppgavekort: "Hard" → "Vanskelig"
-  document.querySelectorAll('.lab-meta .badge-hard').forEach(el => {
-    if (el.textContent.trim() === 'Hard') el.textContent = 'Vanskelig';
-  });
-
-  // 6. Bunn-nav "← Hjem" → "← Labber" med riktig href
-  document.querySelectorAll('a.btn.btn-ghost').forEach(el => {
-    if (el.textContent.trim() === '← Hjem') {
-      el.textContent = '← Labber';
-      el.href = el.href.replace('index.html', 'labber.html');
-    }
-    if (el.textContent.includes('Tilbake til oversikten')) {
-      el.textContent = '← Labber';
-      el.href = el.href.replace('index.html', 'labber.html');
-    }
-  });
-  document.querySelectorAll('a.btn.btn-success').forEach(el => {
-    if (el.textContent.includes('Tilbake til oversikten')) {
-      el.className = 'btn btn-ghost';
-      el.textContent = '← Labber';
-      el.href = el.href.replace('index.html', 'labber.html');
-    }
+    el.textContent = el.textContent
+      .replace(/: Hard$/, ': Vanskelig')
+      .replace(/^Hard$/, 'Vanskelig');
   });
 
   loadDoneStates();

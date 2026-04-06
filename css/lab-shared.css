@@ -25,9 +25,9 @@ strong{font-weight:600;color:var(--text)}
 .lab-body{display:none}
 .lab-card.open .lab-body{display:block}
 
-/* split layout — større vindu */
-.lab-split{display:grid;grid-template-columns:360px 1fr;min-height:620px}
-.lab-left{padding:28px;border-right:1px solid var(--border);background:var(--bg3);display:flex;flex-direction:column;gap:14px}
+/* split layout */
+.lab-split{display:grid;grid-template-columns:420px 1fr;min-height:720px}
+.lab-left{padding:32px;border-right:1px solid var(--border);background:var(--bg3);display:flex;flex-direction:column;gap:16px}
 .lab-right{background:#0a0c10;display:flex;flex-direction:column}
 
 /* objective panel */
@@ -75,7 +75,7 @@ strong{font-weight:600;color:var(--text)}
 .ts-result{background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:12px;min-height:40px;font-size:13px;color:#444}
 .ts-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;text-transform:uppercase;letter-spacing:.05em}
 .vuln-tag{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
-.safe-tag{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.safe-tag{background:#dcfce7;color:#166634;border:1px solid #86efac}
 .info-tag{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
 
 /* level badges */
@@ -105,7 +105,7 @@ strong{font-weight:600;color:var(--text)}
 
 /* terminal in lab */
 .lab-term{background:#05070a;border-top:1px solid var(--border);flex:1;display:flex;flex-direction:column;font-family:var(--mono)}
-.lab-term-body{padding:14px 18px;max-height:380px;overflow-y:auto;font-size:12px;line-height:1.9;flex:1}
+.lab-term-body{padding:14px 18px;max-height:440px;overflow-y:auto;font-size:12px;line-height:1.9;flex:1}
 .lt-prompt{color:var(--green)}.lt-out{color:var(--text2)}.lt-info{color:var(--amber)}.lt-err{color:var(--red)}
 .lab-term-input{display:flex;align-items:center;padding:9px 18px;border-top:1px solid var(--border);background:#05070a}
 .lt-ps1{color:var(--green);font-size:13px;white-space:nowrap;margin-right:6px}
@@ -126,8 +126,8 @@ strong{font-weight:600;color:var(--text)}
 .filter-pill.active-medium{background:var(--amber);color:#000;border-color:var(--amber)}
 .filter-pill.active-hard{background:var(--red);color:#fff;border-color:var(--red)}
 
-@media(max-width:860px){
-  .lab-split{grid-template-columns:300px 1fr}
+@media(max-width:960px){
+  .lab-split{grid-template-columns:340px 1fr}
 }
 @media(max-width:720px){
   .lab-split{grid-template-columns:1fr;min-height:auto}
